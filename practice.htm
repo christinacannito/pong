@@ -1,0 +1,265 @@
+<html>
+<head>
+	<title>Pong</title>
+	<script type="text/javascript">
+		//function draw() {
+			//var canvas = document.getElementById('canvas');
+			// if (canvas.getContext) {
+				// var ctx = canvas.getContext('2d');
+
+				// curves making a heart
+				// ctx.beginPath();
+		  //   ctx.moveTo(75,40);
+		  //   ctx.bezierCurveTo(75,37,70,25,50,25);
+		  //   ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+		  //   ctx.bezierCurveTo(20,80,40,102,75,120);
+		  //   ctx.bezierCurveTo(110,102,130,80,130,62.5);
+		  //   ctx.bezierCurveTo(130,62.5,130,25,100,25);
+		  //   ctx.bezierCurveTo(85,25,75,37,75,40);
+		  //   ctx.fill();
+
+
+				// bezier curves 
+				// ctx.beginPath();
+				// ctx.moveTo(75, 25);
+				// ctx.quadraticCurveTo(25, 25, 25, 62.5);
+				// ctx.quadraticCurveTo(25, 100, 50, 100);
+				// ctx.quadraticCurveTo(50, 120, 30, 125);
+				// ctx.quadraticCurveTo(60, 120, 65, 100);
+				// ctx.quadraticCurveTo(125, 100, 125, 62.5);
+				// ctx.quadraticCurveTo(125, 25, 75, 25);
+				// ctx.stroke();
+
+				// arcs
+				// for (var i = 0; i < 4; i++) {
+				// 	for (var j = 0; j < 3; j++) {
+				// 		ctx.beginPath();
+				// 		var x = 25 + j * 50; // x coordinate
+				// 		var y = 25 + i * 50; // y coordinate
+				// 		var radius = 20; // arc radius
+				// 		var startAngle = 0; // starting point on circle
+				// 		var endAngle = Math.PI+(Math.PI*j)/2; // end point on circle
+				// 		var anticlockwise = i%2==0 ? false : true; // clockwise or anticlockwise
+
+				// 		ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+
+				// 		if (i > 1) {
+				// 			ctx.fill();
+				// 		} else {
+				// 			ctx.stroke();
+				// 		}
+				// 	}
+				// }
+
+				// triangles
+				// filled triangle 
+				// ctx.beginPath();
+				// ctx.moveTo(25, 25);
+				// ctx.lineTo(105, 25);
+				// ctx.lineTo(25, 105);
+				// ctx.fill();
+
+				// stroked triangle 
+				// ctx.beginPath();
+				// ctx.moveTo(125, 125);
+				// ctx.lineTo(125, 45);
+				// ctx.lineTo(45, 125);
+				// ctx.closePath();
+				// ctx.stroke();
+
+
+
+				// smiley face
+        // ctx.beginPath();
+        // ctx.arc(75, 75, 50, 0, Math.PI*2, true); // outer circle
+        // ctx.moveTo(110, 75);
+        // ctx.arc(75, 75, 35, 0, Math.PI, false); // Mouth
+        // ctx.moveTo(65, 65);
+        // ctx.arc(60, 65, 5, 0, Math.PI*2, true); // left eye
+        // ctx.moveTo(95, 65);
+        // ctx.arc(90, 65, 5, 0, Math.PI*2, true); // right eye 
+        // ctx.stroke();
+			// }
+		//} // end of draw function
+	</script>
+</head>
+<body> <!-- onload="draw();" for above -->
+
+	<canvas id="canvas" width="200" height="100" style="border: 10px solid #83AF9B;"></canvas>
+
+	<canvas id='line' width='200' height='100' style="border: 10px solid #83AF9B;"></canvas>
+
+	<canvas id="circle" width='200' height='100' style="border: 10px solid #83AF9B;"></canvas>
+
+	<canvas id="gradient" width='200' height='100' style="border: 10px solid #83AF9B;"></canvas>
+
+	<canvas id="radGradient" width='200' height='100' style="border: 10px solid #83AF9B;"></canvas>
+
+	<canvas id="hello" width='200' height='100' style="border: 10px solid #83AF9B;"></canvas>
+
+	<canvas id="stroke" width='200' height='100' style="border: 10px solid #83AF9B;"></canvas>
+
+	<canvas id="txtColor" width='200' height='100' style="border: 10px solid #83AF9B;"></canvas>
+
+	<canvas id="clock" width='300' height='300' style="border: 10px solid #83AF9B;"></canvas>
+
+	<script type="text/javascript">
+			var canvas = document.getElementById('canvas'); // find your canvas
+			var ctx = canvas.getContext("2d"); // getContext is a built in HTML object
+			ctx.fillStyle = "#F9CDAD"; // draw on the canvas - set the fill style
+			ctx.fillRect(0, 0, 150, 75); // draws a rectangel (x, y, width, height)
+
+			// straight line
+			// to draw a straight line you use moveTo(x, y) - starting point and lineTo(x, y)  - ending point
+			var line = document.getElementById('line');
+			var myLine = line.getContext("2d");
+			myLine.moveTo(0, 0);
+			myLine.lineTo(200, 100);
+			myLine.stroke();
+
+			// circle 
+			// start with beginPath() then arc(x, y, r, start, stop)
+			// stroke is what actually draws the circle
+			var circle = document.getElementById('circle');
+			var myCircle = circle.getContext('2d');
+			myCircle.beginPath();
+			myCircle.arc(95, 50, 40, 0, 2*Math.PI);
+			myCircle.stroke();
+
+			var gradient = document.getElementById('gradient');
+			var redGradient = gradient.getContext('2d');
+			var grd = redGradient.createLinearGradient(0,0,200,0); // creates the gradient
+			grd.addColorStop(0, '#FE4365'); // adding the color stops
+			grd.addColorStop(1, '#F5F1E9');
+
+			// both of these have been used before!! 
+			redGradient.fillStyle = grd; // applying the gradient
+			redGradient.fillRect(10, 10, 150, 80);
+
+			// creating a radialGradient
+			var radial = document.getElementById('radGradient');
+			var tealRadial = radial.getContext('2d');
+
+			// creating the gradient
+			var tealgrd = tealRadial.createRadialGradient(75, 50, 5, 90, 60, 100);
+			tealgrd.addColorStop(0, "#309292");
+			tealgrd.addColorStop(1, "#F1EDD0");
+
+			// fill the rectangle with the gradient 
+			tealRadial.fillStyle = tealgrd; 
+			tealRadial.fillRect(10, 10, 150, 80);
+
+
+			// text 
+			var hello = document.getElementById('hello');
+			var text = hello.getContext('2d');
+			text.font = "30px Arial";
+			text.fillText("Hello you!", 10, 50); // writes the text on the canvas, x , y
+		
+			// text with stroke 
+			var stroke = document.getElementById('stroke');
+			var strokeEl = stroke.getContext('2d');
+			strokeEl.font = "30px Arial";
+			strokeEl.strokeText("Hello there", 10, 50); // word, x, y
+
+			var txtColor = document.getElementById('txtColor');
+			var txtEl = txtColor.getContext('2d');
+			txtEl.font = "30px Comic Sans MS";
+			txtEl.fillStyle = "#73A8AF";
+			txtEl.textAlign = "center";
+			txtEl.fillText("different", canvas.width/2, canvas.height/2);
+
+			var clock = document.getElementById('clock');
+			var clockTest = clock.getContext('2d');
+			var radius = clock.height / 2; // get the radius of the object using the canvas height 
+			clockTest.translate(radius, radius); // then you just place the clock at the center of the canvas
+			radius = radius * 0.90; // then you are reducing the size of the clock to fit inside the canvas better
+			// drawClock(); // then call the function below which actually draws the object
+
+			// to have the clock move you just use setInterval and set the time you want to constantly draw the clock
+			setInterval(drawClock, 1000); // setInterval is in milliseconds 
+
+			function drawClock() {
+				drawFace(clockTest, radius);
+				drawNumbers(clockTest, radius);
+				drawTime(clockTest, radius)
+			}
+
+			function drawFace (ctx, radius) {
+				var grad; 
+
+				// drawing the inner face of the clock 
+				clockTest.beginPath();
+				clockTest.arc(0, 0, radius, 0, 2 * Math.PI);
+				clockTest.fillStyle = "#B2B6AB";
+				clockTest.fill();
+
+				// create a radial gradient (95% and 105% of the original clock radius)
+				grad = clockTest.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
+				// three color stops 
+				grad.addColorStop(0, '#73A8AF');
+				grad.addColorStop(0.5, '#F2DFCA');
+				grad.addColorStop(1, '#73A8AF');
+				clockTest.strokeStyle = grad; // defining the stroke style
+				clockTest.lineWidth = radius*0.1; // define the line width of the drawing object (10% of the radius)
+				clockTest.stroke(); // draw the circle
+
+				clockTest.beginPath(); // draw the inside of the clock 
+				clockTest.arc(0,0,radius*0.1, 0, 2*Math.PI);
+				clockTest.fillStyle = '#73A8AF';
+				clockTest.fill();
+			}
+
+			function drawNumbers(ctx, radius) {
+				var ang;
+				var num; 
+				ctx.font = radius*0.15 + "px arial"; // sets the font size to 15% of the radius 
+				// set the text to alignment to the middle and the center of the print position 
+				ctx.textBaseline = "middle"; 
+				ctx.textAlign = "center";
+				// calculate the print position for 12 numbers to 85% of the radius, rotate them (PI/6) for each number
+				for (num = 1; num < 13; num++) {
+					ang = num * Math.PI / 6;
+					ctx.rotate(ang);
+					ctx.translate(0, -radius*0.85);
+					ctx.rotate(-ang);
+					ctx.fillText(num.toString(), 0, 0);
+					ctx.rotate(ang);
+					ctx.translate(0, radius*0.85);
+					ctx.rotate(-ang);
+				}
+			}
+
+			function drawTime (ctx, radius) {
+				// Date allows us to get the hour, minute and seconds
+				var now = new Date();
+				var hour = now.getHours();
+				var minute = now.getMinutes();
+				var second = now.getSeconds();
+				// hour
+				// calculate the angle of the hour hand and draw the length and width
+				hour = hour % 12;
+				hour = (hour * Math.PI/6) + (minute * Math.PI/(6*60)) + (second * Math.PI/(360*60));
+				drawHand(ctx, hour, radius * 0.5, radius*0.07);
+				// minute
+				minute = (minute * Math.PI/30) + (second * Math.PI/(30*60));
+				drawHand(ctx, minute, radius* 0.8, radius * 0.07);
+				// second 
+				second = (second*Math.PI/30);
+				drawHand(ctx, second, radius * 0.9, radius * 0.02);
+			}
+
+			function drawHand(ctx, pos, length, width) {
+				ctx.beginPath();
+				ctx.lineWidth = width;
+				ctx.lineCap = "round";
+				ctx.moveTo(0,0);
+				ctx.rotate(pos);
+				ctx.lineTo(0, -length);
+				ctx.stroke();
+				ctx.rotate(-pos);
+			}
+
+	</script>
+</body>
+</html>
