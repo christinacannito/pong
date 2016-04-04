@@ -31,16 +31,15 @@ $(document).ready(function(){
 		// inside here you are just going to draw the ball and place it on the canvas
 		this.ballx = ballx;
 		this.bally = bally;
-
-		var ball = table[0].getContext('2d');
-		ball.beginPath();
-		ball.arc(100, 75, 50, 0, 2 * Math.PI)
-		ball.stroke();
+		this.render = function(){
+			var ball = table[0].getContext('2d');
+			ball.beginPath();
+			ball.arc(this.ballx, this.bally, 50, 0, 2 * Math.PI) // x, y, radius, s angle, e angle
+			ball.stroke();
+		}
 	}
 
-	function render (object) {
-		var object = table[0].getContext('2d');
-		
-	}
+	var firstBall = new Ball(200, 100);
+	firstBall.render();
 
 });
