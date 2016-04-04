@@ -10,12 +10,17 @@ $(document).ready(function(){
 	line.stroke(); // draw the line
 
 	// the prototype for the paddles
-	function Paddle(xpos, ypos, pwidth, pheight, pcolor) {
+	function Paddle(xpos, ypos, pwidth, pheight) {
 		this.xpos = xpos;
 		this.ypos = ypos;
 		this.pwidth = pwidth;
 		this.pheight = pheight;
-		this.pcolor = pcolor;
+		// this.pcolor = pcolor;
+		this.render = function () {
+			var paddle = table[0].getContext('2d');
+			paddle.rect(this.xpos, this.ypos, pwidth, pheight); // x, y, width, height
+			paddle.stroke();
+		}
 	} // paddle object
 
 	// might change the parameters here
@@ -40,6 +45,11 @@ $(document).ready(function(){
 	}
 
 	var firstBall = new Ball(200, 100);
-	firstBall.render();
+	firstBall.render(); // draws the ball
 
+	var leftPaddle = new Paddle(0, 100, 50, 100);
+	leftPaddle.render();
+
+	var rightPaddle = new Paddle(750, 100, 50, 100);
+	rightPaddle.render();
 });
