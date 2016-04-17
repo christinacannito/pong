@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>take two</title>
+	<style type="text/css">
+		canvas {
+			border: 5px solid #BED9E4;
+		}
+	</style>
+</head>
+<body>
+
+	<canvas id="myCanvas" width="600" height="300"></canvas>
+
+	<button id="stop">stop</button>
+
+	<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		// first thing to do is to get the canvas element
+		var mainCanvas = $('#myCanvas');
+		var mainContext = mainCanvas[0].getContext('2d');
+
+		var canvasWidth = mainCanvas.width();
+		var canvasHeight = mainCanvas.height();
+
+		// you make requestAnimationFrame into a variable to account for different browswers
+		var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+	
+		var counter = 0; // this gets added to inside the drawLine function
+
+		var id;
+
+
+		function drawLine (timestamp) {
+			// first thing when drawing a line is to clear out what was already on the screen
+			mainContext.clearRect(0, 0, canvasWidth, canvasHeight); // you clear the context
+			
+			// next all the information you will need to draw the line or rectangle
+			// now we need a varible that is going to change so that our line will change
+			mainContext.beginPath(); // NEED THIS
+			mainContext.moveTo(counter, canvasHeight / 2);
+			mainContext.lineTo(canvasWidth, canvasHeight / 2)
+			mainContext.stroke();
+			
+			counter += 1;
+
+			console.log('counter: ', counter)
+
+			if (counter < 20) {
+				id = requestAnimationFrame(drawLine)
+				console.log('id: ', id)
+			}
+
+			id = requestAnimationFrame(drawLine)
+			window.cancelAnimationFrame(id);
+		}
+
+		drawLine()
+
+	</script>
+</body>
+</html>

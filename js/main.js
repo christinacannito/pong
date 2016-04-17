@@ -3,54 +3,113 @@ $(document).ready(function(){
 	var table = $('#table'); // get the canvas element
 	// console.log("table: ", table)	
 	var line = table[0].getContext('2d'); // getContext ?
+	line.beginPath();
 	line.moveTo(0, 200);  // starting point
 	line.lineTo(800, 200); // end point
 	line.strokeStyle = "#EDBBA2";
 	line.lineWidth = 5;
 	line.stroke(); // draw the line
 
+	// requestAnimationFrame for all browsers
+	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+	// variable for the animation
+	var counter = 0;
+	var id;
+
 	// the prototype for the paddles
-	function Paddle(speed) {
-		// this.xpos = xpos;
-		// this.ypos = ypos;
-		// this.pwidth = pwidth;
-		// this.pheight = pheight;
-		// this.pcolor = pcolor;
+	function Paddle(speed, x, y) {
 		this.speed= speed;
-		this.render = function (x, y, pwidth, pheight) {
-			var paddle = table[0].getContext('2d');
-			paddle.rect(x, y, pwidth, pheight); // x, y, width, height
-			paddle.stroke();
+		this.paddleContext = table[0].getContext('2d');
+		this.x = x;
+		this.y = y;
+		this.render = function (x, y) {
+			this.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
+			this.paddleContext.rect(this.x, this.y, 50, 100); // x, y, width, height
+			this.paddleContext.stroke();
 		}
-		this.move = function(speed, pheight) {
+		console.log('outside x:', this.x, 'y: ', this.y)
+		var self = this;
+		this.move = function() {
 			console.log('inside move')
 			console.log('speed: ', speed)
-			$(window).keydown(function(e){
-				console.log('inside keydown')
-				console.log('e: ', e.which)
+			console.log('this inside move: ', this.paddle)
+			//var self = this; // self is the paddle
+			$(window).on('keydown', function(e){
+				// this inside here refers to the keydown
 				if ( e.which == 38 ) {
 					console.log('up was pressed');
-					// you will want redraw the paddle up 6pixels every time the up arrow is pressed 
-					pheight = pheight + speed; 
-					console.log('pheight HERE: ', pheight);
-					requestAnimationFrame(animate(pheight)); // then say to animate the paddle
+					// Inside here is where you want the animation to take place
+
+					// animation of the paddles 
+					function animate (x, y) { // paddle here is the paddle object
+						// (x, y, width, height)
+						console.log('paddle inside: ', self.paddleContext)
+						console.log('self.paddleContext: ', self.paddleContext)
+						console.log('self.paddleContext.clearRect(self.x, self.y, 55, 400); ',self.paddleContext.clearRect(self.x, self.y, 55, 400);)
+						console.log('here x: ', self.x, 'y: ', self.y);
+						self.paddleContext.clearRect(self.x, self.y, 55, 400); // needs to clear what was there
+						// then redraw the paddles
+						// console.log('paddle: ', paddle)
+						self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
+						self.paddleContext.rect(self.x, self.y -= 2, 50, 100); // x, y, width, height
+						self.paddleContext.stroke();
+
+						counter += 1; // keeps track of the steps
+
+						console.log('counter: ', counter)
+
+						if (counter < 20) { // once counter is equal to 20 it will stop
+							id = requestAnimationFrame(animate)
+							console.log('id: ', id)
+						}
+
+						id = requestAnimationFrame(animate);
+						window.cancelAnimationFrame(id);
+					}
+					console.log('self paddle: ', self) // this you see the paddle object
+					animate(self.x, self.y)
 				} else if ( e.which == 40 ) {
 					console.log('down was pressed');
-					// will want to move the paddle down 6 pixels every time the down arrow is pressed
-					pheight = pheight - speed;
-					requestAnimationFrame(animate(pheight)); // then say to animate the paddle
+					function animate (x, y) { // paddle here is the paddle object
+						// (x, y, width, height)
+						console.log('paddle inside: ', self.paddleContext)
+						console.log('here x: ', self.x, 'y: ', self.y);
+						// console.log('self.paddleContext.clearRect(self.x, self.y, 50, 100): ', self.paddleContext.clearRect(self.x, self.y, 50, 100))
+						self.paddleContext.clearRect(self.x, self.y, 55, 400); // needs to clear what was there
+						// then redraw the paddles
+						// console.log('paddle: ', paddle)
+						self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
+						self.paddleContext.rect(self.x, self.y += 2, 50, 100); // x, y, width, height
+						self.paddleContext.stroke();
+
+						counter += 1; // keeps track of the steps
+
+						console.log('counter: ', counter)
+
+						if (counter < 20) { // once counter is equal to 20 it will stop
+							id = requestAnimationFrame(animate)
+							console.log('id: ', id)
+						}
+
+						id = requestAnimationFrame(animate);
+						window.cancelAnimationFrame(id);
+					}
+					console.log('self paddle: ', self) // this you see the paddle object
+					animate(self.x, self.y)
 				}
-			})			
+			})
 		}
 	} // paddle object
 
 	// might change the parameters here
 	function Player (paddle) {
 		this.paddle = new Paddle(0, 200, 20, 20);
+		console.log('paddle btm: ', this.paddle)
 	} // player object
 
 	function Computer (paddle) {
 		this.paddle = new Paddle(200, 800, 20, 20);
+
 	} // computer object
 
 	function Ball (ballx, bally) {
@@ -65,27 +124,16 @@ $(document).ready(function(){
 		}
 	}
 
-	// animating the objects
-	var animate = function (step) {
-		// console.log('step: ', step)
-		// requestAnimationFrame(animate);
-		// animate something
-		// console.log('inside animate function')
-
-		// then you have to change the paddle coordinates
-		leftPaddle.render(0, pheight, 50, 100);
-	}
-
-	// requestAnimationFrame(animate); // will get called from the move function
-
 	// drawing, creating the objects
 	var firstBall = new Ball(200, 100);
 	firstBall.render(); // draws the ball
 
-	var leftPaddle = new Paddle(6);
-	leftPaddle.render(0, 100, 50, 100);
-	leftPaddle.move(6, 100);
+	var leftPaddle = new Paddle(20, 0, 100);
+	leftPaddle.render(0, 100);
+	console.log('leftPaddle: ', leftPaddle)
+	leftPaddle.move();
+	// next you are going to want to move the paddle
 
-	var rightPaddle = new Paddle(6);
-	rightPaddle.render(750, 100, 50, 100);
+	var rightPaddle = new Paddle(20, 750, 100);
+	rightPaddle.render(750, 100);
 });

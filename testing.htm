@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>testing animation frame</title>
+</head>
+<body>
+
+	<canvas id="table" width='800' height='400' style="border: 10px solid #73A8AF;"></canvas>
+
+
+	<script   src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		$(document).on('keydown', function(e){
+			console.log('e', e.keycode)
+			if (e.keycode == 38) {
+				console.log('up arrow')
+			} else {
+				console.log('something else')
+			}
+		})
+		// function draw() {
+		// 	console.log('inside draw')
+		//     requestAnimationFrame(draw);
+
+		//     // Drawing code goes here
+		//     var table = $('#table'); // get the canvas element
+		// 	console.log("table: ", table)
+		// 	var line = table[0].getContext('2d'); // getContext ?
+		// 	line.moveTo(0, 200);  // starting point
+		// 	line.lineTo(800, 200); // end point
+		// 	line.strokeStyle = "#EDBBA2";
+		// 	line.lineWidth = 5;
+		// 	line.stroke(); // draw the line
+		// }
+		// draw();
+	</script>
+</body>
+</html>
