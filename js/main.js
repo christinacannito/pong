@@ -45,9 +45,9 @@ $(document).ready(function(){
 						// (x, y, width, height)
 						console.log('paddle inside: ', self.paddleContext)
 						console.log('self.paddleContext: ', self.paddleContext)
-						console.log('self.paddleContext.clearRect(self.x, self.y, 55, 400); ',self.paddleContext.clearRect(self.x, self.y, 55, 400);)
+						console.log('TOP self.paddleContext.clearRect(self.x, self.y, 55, 400); ', self.paddleContext.clearRect(self.x, self.y, 55, 400))
 						console.log('here x: ', self.x, 'y: ', self.y);
-						self.paddleContext.clearRect(self.x, self.y, 55, 400); // needs to clear what was there
+						self.paddleContext.clearRect(self.x, self.y, 55, 100); // needs to clear what was there
 						// then redraw the paddles
 						// console.log('paddle: ', paddle)
 						self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
@@ -74,8 +74,8 @@ $(document).ready(function(){
 						// (x, y, width, height)
 						console.log('paddle inside: ', self.paddleContext)
 						console.log('here x: ', self.x, 'y: ', self.y);
-						// console.log('self.paddleContext.clearRect(self.x, self.y, 50, 100): ', self.paddleContext.clearRect(self.x, self.y, 50, 100))
-						self.paddleContext.clearRect(self.x, self.y, 55, 400); // needs to clear what was there
+						console.log('self.paddleContext.clearRect(self.x, self.y, 50, 100): ', self.paddleContext.clearRect(self.x, self.y, 50, 400))
+						self.paddleContext.clearRect(self.x, self.y, 55, -100); // needs to clear what was there
 						// then redraw the paddles
 						// console.log('paddle: ', paddle)
 						self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
