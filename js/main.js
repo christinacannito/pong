@@ -16,6 +16,9 @@ $(document).ready(function(){
 	var counter = 0;
 	var id;
 
+	var increment = 2;
+	var decrement = -2;
+
 	// the prototype for the paddles
 	function Paddle(speed, x, y) {
 		this.speed= speed;
@@ -29,63 +32,132 @@ $(document).ready(function(){
 		}
 		console.log('outside x:', this.x, 'y: ', this.y)
 		var self = this;
-		this.move = function() {
+		this.move = function(location) {
 			console.log('inside move')
-			$(window).on('keydown', function(e){
-				// this inside here refers to the keydown
-				if ( e.which == 38 ) {
-					console.log('up was pressed');
-					// Inside here is where you want the animation to take place
-					// animation of the paddles 
-					function animate (x, y) { // paddle here is the paddle object
-						// (x, y, width, height)
-						self.paddleContext.clearRect(self.x, self.y, 55, 400); // needs to clear what was there
-						// then redraw the paddles
-						self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
-						self.paddleContext.rect(self.x, self.y -= 2, 50, 100); // x, y, width, height
-						self.paddleContext.stroke();
+			if (location == 'left') {
+				$(window).on('keydown', function(e){
+					// this inside here refers to the keydown
+					if ( e.which == 38 ) {
+						console.log('up was pressed');
+						// Inside here is where you want the animation to take place
+						// animation of the paddles 
+						function animate (timestamp) { // paddle here is the paddle object
+							// (x, y, width, height)
+							self.paddleContext.clearRect(self.x, self.y, 55, 400); // needs to clear what was there
+							// then redraw the paddles
+							console.log('y: ', self.y)
+							// console.log('y += change: ', self.y += change)
+							self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
+							// self.y += change;
+							self.y += decrement; // global var
+							self.paddleContext.rect(self.x, self.y, 50, 100); // x, y, width, height
+							self.paddleContext.stroke();
 
-						counter += 1; // keeps track of the steps
+							counter += 1; // keeps track of the steps
 
-						console.log('counter: ', counter)
+							console.log('counter: ', counter)
 
-						if (counter < 20) { // once counter is equal to 20 it will stop
-							id = requestAnimationFrame(animate)
-							console.log('id: ', id)
+							if (counter < 20) { // once counter is equal to 20 it will stop
+								id = requestAnimationFrame(animate)
+								console.log('id: ', id)
+							}
+
+							id = requestAnimationFrame(animate);
+							window.cancelAnimationFrame(id);
 						}
-
-						id = requestAnimationFrame(animate);
-						window.cancelAnimationFrame(id);
-					}
-					console.log('self paddle: ', self) // this you see the paddle object
-					animate(self.x, self.y)
-				} else if ( e.which == 40 ) {
-					console.log('down was pressed');
-					function animate (x, y) { // paddle here is the paddle object
-						// (x, y, width, height)
-						console.log('x: ', x, 'y: ', y)
-						// if y == 262 then you can't go down any further
-
-						self.paddleContext.clearRect(self.x, self.y + -100, 55, 400); // needs to clear what was there
-						self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
-						self.paddleContext.rect(self.x, self.y += 2, 50, 100); // x, y, width, height
-						self.paddleContext.stroke();
-
-						counter += 1; // keeps track of the steps
-
-						console.log('counter: ', counter)
-
-						if (counter < 20) { // once counter is equal to 20 it will stop
-							id = requestAnimationFrame(animate)
+						if (self.y > 0 && self.y < 296) {
+ 							animate()
+						} else {
+							// animate()
+							console.log('y was less than zero')
 						}
+					} else if ( e.which == 40 ) {
+						console.log('down was pressed');
+						function animate (timestamp) { // paddle here is the paddle object
+							// (x, y, width, height)
+							console.log('x: ', self.x, 'y: ', self.y)
+							// if y == 262 then you can't go down any further
 
-						id = requestAnimationFrame(animate);
-						window.cancelAnimationFrame(id);
+							self.paddleContext.clearRect(self.x, self.y + -100, 55, 400); // needs to clear what was there
+							self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
+							self.y += increment; //global var
+							self.paddleContext.rect(self.x, self.y, 50, 100); // x, y, width, height
+							self.paddleContext.stroke();
+
+							counter += 1; // keeps track of the steps
+
+							console.log('counter: ', counter)
+
+							if (counter < 20) { // once counter is equal to 20 it will stop
+								id = requestAnimationFrame(animate)
+							}
+
+							id = requestAnimationFrame(animate);
+							window.cancelAnimationFrame(id);
+						}
+						animate()
 					}
-					console.log('self paddle: ', self) // this you see the paddle object
-					animate(self.x, self.y)
-				}
-			})
+				})
+			} else if (location == 'right') {
+				$(window).on('keydown', function(e){
+					// this inside here refers to the keydown
+					if ( e.which == 65 ) {
+						console.log('up was pressed');
+						// Inside here is where you want the animation to take place
+						// animation of the paddles 
+						function animate (timestamp) { // paddle here is the paddle object
+							// (x, y, width, height)
+							self.paddleContext.clearRect(self.x - 3, self.y, 50, 400); // needs to clear what was there
+							// then redraw the paddles
+							console.log('y: ', self.y)
+							// console.log('y += change: ', self.y += change)
+							self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
+							// self.y += change;
+							self.y += decrement; // global var
+							self.paddleContext.rect(self.x, self.y, 50, 100); // x, y, width, height
+							self.paddleContext.stroke();
+
+							counter += 1; // keeps track of the steps
+
+							console.log('counter: ', counter)
+
+							if (counter < 20) { // once counter is equal to 20 it will stop
+								id = requestAnimationFrame(animate)
+								console.log('id: ', id)
+							}
+
+							id = requestAnimationFrame(animate);
+							window.cancelAnimationFrame(id);
+						}
+						animate()
+					} else if ( e.which == 90 ) {
+						console.log('down was pressed');
+						function animate (timestamp) { // paddle here is the paddle object
+							// (x, y, width, height)
+							console.log('x: ', self.x, 'y: ', self.y)
+							// if y == 262 then you can't go down any further
+
+							self.paddleContext.clearRect(self.x, self.y + -100, 55, 400); // needs to clear what was there
+							self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
+							self.y += increment; //global var
+							self.paddleContext.rect(self.x, self.y, 50, 100); // x, y, width, height
+							self.paddleContext.stroke();
+
+							counter += 1; // keeps track of the steps
+
+							console.log('counter: ', counter)
+
+							if (counter < 20) { // once counter is equal to 20 it will stop
+								id = requestAnimationFrame(animate)
+							}
+
+							id = requestAnimationFrame(animate);
+							window.cancelAnimationFrame(id);
+						}
+						animate()
+					}
+				})
+			}
 		}
 	} // paddle object
 
@@ -122,10 +194,10 @@ $(document).ready(function(){
 	var leftPaddle = new Paddle(20, 0, 100);
 	leftPaddle.render(0, 100);
 	console.log('leftPaddle: ', leftPaddle)
-	leftPaddle.move();
+	leftPaddle.move('left'); // keycodes up || down
 	// next you are going to want to move the paddle
 
 	var rightPaddle = new Paddle(20, 750, 100);
 	rightPaddle.render(750, 100);
-	rightPaddle.move() // want different keycodes
+	rightPaddle.move('right') // want different keycodes...use z||a 
 });
