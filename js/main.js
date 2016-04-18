@@ -31,25 +31,16 @@ $(document).ready(function(){
 		var self = this;
 		this.move = function() {
 			console.log('inside move')
-			console.log('speed: ', speed)
-			console.log('this inside move: ', this.paddle)
-			//var self = this; // self is the paddle
 			$(window).on('keydown', function(e){
 				// this inside here refers to the keydown
 				if ( e.which == 38 ) {
 					console.log('up was pressed');
 					// Inside here is where you want the animation to take place
-
 					// animation of the paddles 
 					function animate (x, y) { // paddle here is the paddle object
 						// (x, y, width, height)
-						console.log('paddle inside: ', self.paddleContext)
-						console.log('self.paddleContext: ', self.paddleContext)
-						console.log('TOP self.paddleContext.clearRect(self.x, self.y, 55, 400); ', self.paddleContext.clearRect(self.x, self.y, 55, 400))
-						console.log('here x: ', self.x, 'y: ', self.y);
-						self.paddleContext.clearRect(self.x, self.y, 55, 100); // needs to clear what was there
+						self.paddleContext.clearRect(self.x, self.y, 55, 400); // needs to clear what was there
 						// then redraw the paddles
-						// console.log('paddle: ', paddle)
 						self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
 						self.paddleContext.rect(self.x, self.y -= 2, 50, 100); // x, y, width, height
 						self.paddleContext.stroke();
@@ -72,12 +63,10 @@ $(document).ready(function(){
 					console.log('down was pressed');
 					function animate (x, y) { // paddle here is the paddle object
 						// (x, y, width, height)
-						console.log('paddle inside: ', self.paddleContext)
-						console.log('here x: ', self.x, 'y: ', self.y);
-						console.log('self.paddleContext.clearRect(self.x, self.y, 50, 100): ', self.paddleContext.clearRect(self.x, self.y, 50, 400))
-						self.paddleContext.clearRect(self.x, self.y, 55, -100); // needs to clear what was there
-						// then redraw the paddles
-						// console.log('paddle: ', paddle)
+						console.log('x: ', x, 'y: ', y)
+						// if y == 262 then you can't go down any further
+
+						self.paddleContext.clearRect(self.x, self.y + -100, 55, 400); // needs to clear what was there
 						self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
 						self.paddleContext.rect(self.x, self.y += 2, 50, 100); // x, y, width, height
 						self.paddleContext.stroke();
@@ -88,7 +77,6 @@ $(document).ready(function(){
 
 						if (counter < 20) { // once counter is equal to 20 it will stop
 							id = requestAnimationFrame(animate)
-							console.log('id: ', id)
 						}
 
 						id = requestAnimationFrame(animate);
@@ -100,6 +88,9 @@ $(document).ready(function(){
 			})
 		}
 	} // paddle object
+
+
+	// move animation function outside of the paddle object
 
 	// might change the parameters here
 	function Player (paddle) {
@@ -136,4 +127,5 @@ $(document).ready(function(){
 
 	var rightPaddle = new Paddle(20, 750, 100);
 	rightPaddle.render(750, 100);
+	rightPaddle.move() // want different keycodes
 });
