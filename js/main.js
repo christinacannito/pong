@@ -164,13 +164,24 @@ $(document).ready(function(){
     	this.collide = function (gameObject) {
     		// ballx + radius = front of the 
             console.log('inside collide')
-            console.log('rightPaddle.paddleWidth / 2): ', rightPaddle.paddleWidth + 10)
-    	    if (this.ballX <= (leftPaddle.x + 70) 
-                && this.ballY <= (leftPaddle.y + 100)
-                ) {
+            console.log('rightPaddle.paddleWidth / 2): ', rightPaddle.paddleWidth)
+
+            if (this.ballX < rightPaddle.x + rightPaddle.paddleWidth + 30
+                && this.ballX + this.ballWidth  > rightPaddle.x  + 50
+                && this.ballY < rightPaddle.y + rightPaddle.height 
+                && this.ballY + this.ballHeight > rightPaddle.y) {
                 ballThis.ballDY =- ballThis.ballDY;
-            }   
-        	// if (this.ballX <= (rightPaddle.x + rightPaddle.paddleWidth - 25)
+            }
+
+            // almost
+    	    // if (this.ballX <= (leftPaddle.x + 70) 
+         //        && this.ballY <= (leftPaddle.y + 100)
+         //        ) {
+         //        ballThis.ballDY =- ballThis.ballDY;
+         //    }   
+        	
+            // not really there 
+            // if (this.ballX <= (rightPaddle.x + rightPaddle.paddleWidth - 25)
       //           && rightPaddle.x <= (this.ballX + this.ballRadius - 25)
       //           && this.ballY <= (rightPaddle.y + rightPaddle.paddleHeight - 25)
       //           && rightPaddle.y <= (this.ballY + this.ballRadius - 25)) {
