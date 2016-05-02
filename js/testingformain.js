@@ -7,6 +7,9 @@ $(document).ready(function(){
 	var canvasWidth = table.width();
 	var canvasHeight = table.height();
 
+	var leftPaddleScore = 0;
+	var rightPaddleScore = 0;
+
 	function drawCanvas () {
 	    tableContext.beginPath();
 	    tableContext.moveTo(0, halfWay);  // starting point
@@ -67,6 +70,8 @@ $(document).ready(function(){
 		this.x = x; 
 		this.y = y;
 		this.radius = radius;
+		this.speedX = 2;
+		this.speedY = -2;
 		this.render = function() {
 			tableContext.beginPath();
 			tableContext.arc(this.x, this.y, this.radius, 0, Math.PI *2);
@@ -74,18 +79,51 @@ $(document).ready(function(){
 			tableContext.fill();
 			tableContext.closePath();
 			// inside the render is where you will check for collisions
+
+			// every time you render you have to check to see if the ball hits a wall 
+			if ( this.y + this.speedY < 0 ) {
+				this.speedY = -this.speedY;
+			} // this is for the top wall 
+
+			if (this.y + this.speedY > canvasHeight) {
+				this.speedY = -this.speedY;
+			} // this is for the bottom 
+
+			// bouncing off left and right 
+			// if the ball hits these two wall then a point is scored
+			if (this.x + this.speedX > canvasWidth) { // right side 
+				// left paddle has scored a point 
+				console.log('leftscored')
+				drawScore();
+				this.speedX = - this.speedX
+			}
+
+			if (this.x + this.speedX < 0) { // left side
+				rightPaddleScore += 1;
+				this.speedX = - this.speedX
+			}
+
+
+			this.x += this.speedX; 
+			this.y += this.speedY;
 		} // this will draw the object
 	}
 
+			function drawScore () {
+				// leftPaddleScore += 1;
+				tableContext.beginPath();
+				tableContext.font = "30px Comic Sans MS";
+				tableContext.fillStyle = "red";
+				tableContext.textAlign = "center";
+				tableContext.fillText("player score", 100, 350); 
+				tableContext.closePath();
+			}
+
+	// creation of the objects
 	var leftPaddle = new Paddle(0, 10, 50, 100, 2);
-	
-
 	var rightPaddle = new Paddle(750, 20, 50, 100, 2);
-	
-
 	var firstBall = new Ball(90, 100, 20)
 	
-
 	var requestAnimationFrame = window.requestAnimationFrame || 
 		window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame    ||
@@ -100,6 +138,7 @@ $(document).ready(function(){
 
     	tableContext.clearRect(0, 0, canvasWidth, canvasHeight);
 		drawCanvas();
+		drawScore();
 		rightPaddle.move();
 		rightPaddle.render();
 		leftPaddle.render();
