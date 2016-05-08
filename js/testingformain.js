@@ -22,12 +22,13 @@ $(document).ready(function(){
 
 	
 
-	function Paddle (x, y, width, height, speed) {
+	function Paddle (x, y, width, height, speed, paddleSide) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.speed = speed;
+		this.paddleSide = paddleSide;
 		this.render = function() {
 			tableContext.beginPath();
 			tableContext.rect(this.x, this.y, width, height);
@@ -38,6 +39,7 @@ $(document).ready(function(){
 		} // this will draw the object
 		var paddleObject = this;
 		console.log('y: ', this.y)
+		console.log('paddleObject: ', paddleObject)
 		this.move = function () {
 			// this will update the position of the paddle
 			// paddles only move along the Y axis
@@ -49,18 +51,31 @@ $(document).ready(function(){
 			// as long as the position of the paddle is greater than zero and less than the height of the canvas you can move it 
 			// you can keep moving the paddle
 			$(window).keydown(function(e){
-				if (e.which == 38 && paddleObject.y >= 0) {
+				if (paddleObject.paddleSide  == "left") {
+					console.log('was left')
+					if (e.which == 90 && paddleObject.y >= 0) {
 						console.log('up was pressed')
 						console.log('paddleObject.y: ', paddleObject.y )
 						paddleObject.y -= 2;	
-						// move up 7 spaces (along Y)
-					
-				} else if (e.which == 40 && paddleObject.y <= canvasHeight - paddleObject.height) {
-					console.log('down was pressed')
-					console.log('paddleObject.y: ', paddleObject.y)
+						// move up 7 spaces (along Y)				
+					} else if (e.which == 65 && paddleObject.y <= canvasHeight - paddleObject.height) {
+						console.log('down was pressed')
+						console.log('paddleObject.y: ', paddleObject.y)
 						paddleObject.y += 2;
 						// move down 7 spaces (along Y)
-					
+					}
+				} else if (paddleObject.paddleSide == "right") {
+					if (e.which == 38 && paddleObject.y >= 0) {
+						console.log('up was pressed')
+						console.log('paddleObject.y: ', paddleObject.y )
+						paddleObject.y -= 2;	
+						// move up 7 spaces (along Y)				
+					} else if (e.which == 40 && paddleObject.y <= canvasHeight - paddleObject.height) {
+						console.log('down was pressed')
+						console.log('paddleObject.y: ', paddleObject.y)
+						paddleObject.y += 2;
+						// move down 7 spaces (along Y)
+					}
 				}
 			})
 		}	
@@ -93,8 +108,8 @@ $(document).ready(function(){
 			// if the ball hits these two wall then a point is scored
 			if (this.x + this.speedX > canvasWidth) { // right side 
 				// left paddle has scored a point 
-				console.log('leftscored')
-				drawScore();
+				console.log('leftscored');
+				leftPaddleScore += 1;
 				this.speedX = - this.speedX
 			}
 
@@ -109,19 +124,21 @@ $(document).ready(function(){
 		} // this will draw the object
 	}
 
-			function drawScore () {
-				// leftPaddleScore += 1;
-				tableContext.beginPath();
-				tableContext.font = "30px Comic Sans MS";
-				tableContext.fillStyle = "red";
-				tableContext.textAlign = "center";
-				tableContext.fillText("player score", 100, 350); 
-				tableContext.closePath();
-			}
+	function drawScore () {	
+		tableContext.beginPath();
+		tableContext.font = "30px Trebuchet MS";
+		tableContext.fillStyle = "#BD5532";
+		tableContext.textAlign = "center";
+		tableContext.fillText("Left player score: " + leftPaddleScore, 150, 350); 
+		tableContext.fillText("Right player score: " + rightPaddleScore, 600, 350); 
+		tableContext.closePath();
+	}
 
 	// creation of the objects
-	var leftPaddle = new Paddle(0, 10, 50, 100, 2);
-	var rightPaddle = new Paddle(750, 20, 50, 100, 2);
+	var leftPaddle = new Paddle(0, 10, 50, 100, 2, "left");
+	var rightPaddle = new Paddle(750, 20, 50, 100, 2, "right");
+	rightPaddle.move();
+	leftPaddle.move();
 	var firstBall = new Ball(90, 100, 20)
 	
 	var requestAnimationFrame = window.requestAnimationFrame || 
@@ -133,19 +150,17 @@ $(document).ready(function(){
 
     function animate() {
     	// all the drawing for the game gets done here
-
     	// first you have to clear the canvas 
-
     	tableContext.clearRect(0, 0, canvasWidth, canvasHeight);
 		drawCanvas();
-		drawScore();
-		rightPaddle.move();
+		
 		rightPaddle.render();
 		leftPaddle.render();
 		firstBall.render()
-    	
+    	drawScore();
 
     	requestAnimationFrame(animate);
     }
-    animate()
+    animate();
+
 })
