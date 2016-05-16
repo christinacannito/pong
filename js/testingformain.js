@@ -32,7 +32,7 @@ $(document).ready(function(){
         this.render = function() {
             tableContext.beginPath();
             tableContext.rect(this.x, this.y, width, height);
-            tableContext.fillStyle = "#B2B6AB"
+            tableContext.fillStyle = "#B2B6AB";
             tableContext.fill();
             tableContext.closePath();
             // inside the render is where you will check for collisions
@@ -56,12 +56,12 @@ $(document).ready(function(){
                     if (e.which == 90 && paddleObject.y >= 0) {
                         console.log('up was pressed')
                         console.log('paddleObject.y: ', paddleObject.y )
-                        paddleObject.y -= 2;      
+                        paddleObject.y -= 10;      
                         // move up 7 spaces (along Y)                                                   
                     } else if (e.which == 65 && paddleObject.y <= canvasHeight - paddleObject.height) {
                         console.log('down was pressed')
                         console.log('paddleObject.y: ', paddleObject.y)
-                        paddleObject.y += 2;
+                        paddleObject.y += 10;
                         // move down 7 spaces (along Y)
                     }
                 } else if (paddleObject.paddleSide == "right") {
@@ -69,12 +69,12 @@ $(document).ready(function(){
                         console.log('up was pressed')
                         console.log('paddleObject.y: ', paddleObject.y )
                         console.log('this.y: ', this.y )
-                        paddleObject.y -= 2;      
+                        paddleObject.y -= 10;      
                         // move up 7 spaces (along Y)                                                   
                     } else if (e.which == 40 && paddleObject.y <= canvasHeight - paddleObject.height) {
                         console.log('down was pressed')
                         console.log('paddleObject.y: ', paddleObject.y)
-                        paddleObject.y += 2;
+                        paddleObject.y += 10;
                         // move down 7 spaces (along Y)
                     }
                 }
@@ -108,35 +108,54 @@ $(document).ready(function(){
 
             // bouncing off left and right
             // if the ball hits these two wall then a point is scored
-            if (this.x + this.speedX > canvasWidth) { // right side
+            var rightPaddleWall = canvasWidth - this.radius - rightPaddle.width;
+            // var rightPaddle = ;
+            console.log('rightPaddle.height: ', rightPaddle.height)
+            console.log('rightPaddle.y + rightPaddle.height: ', rightPaddle.y + rightPaddle.height)
+            if (this.x + this.speedX > rightPaddleWall) { // solves for x
+                console.log('ball hit paddle')
+                if ((this.y + this.speedY > rightPaddle.y ) && (this.y + this.speedY < rightPaddle.y + rightPaddle.height)) { // solves for y
+                    this.speedX = - this.speedX;
+                } else {
+                    // it missed the paddle
+                    rightPaddleScore += 1;
+                }
+                // hits the paddle
+                
+            } // right side wall 
+
+            if (this.x + this.speedX > canvasWidth - this.radius) { // right side wall // FACTOR IN FOR THE PADDLE 
                 // left paddle has scored a point
                 this.speedX = - this.speedX
+                leftPaddleScore += 1;
+                // leftPaddleScore += 1; // left did score because it touched the right side 
                 // you can't score if you hit the paddle so point not added when hits paddle
                 // where is the paddle on the canvas?
-                console.log('paddle.x inside ball: ', leftPaddle.y);
+                console.log('leftpaddle inside ball: ', leftPaddle.y);
+                console.log('rightpadd inside ball: ', rightPaddle.y); // can get the paddle objects inside the ball 
+                // so if it hits the paddle there is no point! 
+
                 // with the paddle object passed into the ball object you can now access that object inside this object
                 // console.log('this.x: ', this.x, 'paddle.x: ', Paddle.x) // true
                 // console.log('this.x: ', this.x, 'paddle.width + paddle.x: ', paddle.width + paddle.x)
                 // paddle.x is always 750 - because that is the first point it is created with
                 // so the paddle object has to always be able to keep track of the ball object
-            } else if (this.x + this.radius > leftPaddle.x && this.x + this.radius < leftPaddle.x + leftPaddle.width) {
-                console.log('was true: paddle.x: ', leftPaddle.x)
-                this.speedX = - this.speedX
-                console.log('leftscored');
-                // leftPaddleScore += 1; //didn't score
             }
 
-            if (this.x + this.speedX < 0) { // left side
+
+
+            // zero represents the left of the canvas
+            if (this.x + this.speedX < 0 + this.radius ) { // left side // FACTOR IN FOR THE PADDLE
                 // right paddle scores
-                rightPaddleScore += 1;
+                // rightPaddleScore += 1;
                 this.speedX = - this.speedX
-            }
+             }
 
 
             this.x += this.speedX;
             this.y += this.speedY;
         } // this will draw the object
-    }
+    } // end of ball object
  
     function drawScore () {
         tableContext.beginPath();
@@ -150,20 +169,30 @@ $(document).ready(function(){
  
     // creation of the objects
     // variables
-    var leftPaddle = new Paddle(0, 10, 50, 100, 2, "left");
-    var rightPaddle = new Paddle(750, 20, 50, 100, 2, "right");
+    var paddleHeight = 100;
+    var leftPaddle = new Paddle(0, 10, 50, paddleHeight, 2, "left");
+    var rightPaddle = new Paddle(750, 20, 50, paddleHeight, 2, "right");
     rightPaddle.move();
     leftPaddle.move();
     var firstBall = new Ball(90, 100, 20, leftPaddle, rightPaddle); // should instantiate ball with paddles as inputs
     // var firstBall = new Ball(90, 100, 20, leftPaddle, rightPaddle);
 
-           
     var requestAnimationFrame = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame    ||
     window.oRequestAnimationFrame      ||
     window.msRequestAnimationFrame     ||
     function(callback) { window.setTimeout(callback, 1000/60) };
+
+    function winner () {
+        if (leftPaddleScore == 2) {
+            // console.log('left paddle won!')
+        } else if (rightPaddleScore == 2) {
+            // console.log('right paddle won')
+        } else {
+            animate();
+        }
+    }
  
     function animate() {
 	    // all the drawing for the game gets done here
@@ -176,8 +205,11 @@ $(document).ready(function(){
         firstBall.render()
 	    drawScore();
 
+        
+
 	    requestAnimationFrame(animate);
     }
-    animate();
- 
+    winner();
+    
+
 })
