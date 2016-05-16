@@ -109,16 +109,17 @@ $(document).ready(function(){
             // bouncing off left and right
             // if the ball hits these two wall then a point is scored
             var rightPaddleWall = canvasWidth - this.radius - rightPaddle.width;
-            // var rightPaddle = ;
+            var rightPaddleTopY = rightPaddle.y - rightPaddle.height;
+            var rightPaddleBottomY = rightPaddle.y;
             console.log('rightPaddle.height: ', rightPaddle.height)
             console.log('rightPaddle.y + rightPaddle.height: ', rightPaddle.y + rightPaddle.height)
             if (this.x + this.speedX > rightPaddleWall) { // solves for x
                 console.log('ball hit paddle')
-                if ((this.y + this.speedY > rightPaddle.y ) && (this.y + this.speedY < rightPaddle.y + rightPaddle.height)) { // solves for y
+                if ((this.y + this.speedY < rightPaddleBottomY ) && (this.y + this.speedY > rightPaddleTopY)) { // solves for y
                     this.speedX = - this.speedX;
                 } else {
                     // it missed the paddle
-                    rightPaddleScore += 1;
+                    leftPaddleScore += 1;
                 }
                 // hits the paddle
                 
