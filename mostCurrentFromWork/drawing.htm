@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>drawing app</title>
+</head>
+<body>
+
+	<div id="canvasDiv"></div>
+
+	<script type="text/javascript">
+		var canvasWidth = 800;
+		var canvasHeight = 400;
+		var canvasDiv = document.getElementById('canvasDiv');
+		var canvas = document.createElement('canvas');
+		canvas.setAttribute('width', canvasWidth);
+		canvas.setAttribute('height', canvasHeight);
+		canvas.setAttribute('id', 'canvas');
+		canvasDiv.appendChild(canvas);
+		if(typeof G_vmlCanvasManager != 'undefined') {
+			canvas = G_vmlCanvasManager.initElement(canvas);
+		}
+		context = canvas.getContext("2d");
+	</script>
+
+</body>
+</html>

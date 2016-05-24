@@ -1,0 +1,173 @@
+body {
+	background-color: #DCBDB1;
+	color: #000;
+	font-family: 'Noto Sans', sans-serif;
+	overflow: hidden;
+}
+h1 {
+	font-family: 'Lobster', cursive;
+	font-size: 3em;
+	color: #73A8AF;
+}
+
+
+.loading {
+	position: fixed;
+	left: 30%;
+	background-image: url(pong-paddle.gif);
+	background-repeat: no-repeat;
+	width: 500px;
+	height: 500px;
+	z-index: 3;
+}
+
+.playGroup {
+	width: 50%;
+	margin: 0 auto;
+}
+
+.startOfGame {
+	width: 60%;
+	margin: 0 auto;
+}
+
+.btnSection {
+	text-align: center;
+}
+
+.winner {
+	position: relative;
+	bottom: 120px;
+	right: 120px;
+}
+
+.winner, .board{
+	visibility: hidden;
+}
+
+.board {
+	text-align: center;
+}
+
+.top {
+	width: 100px;
+	height: 50px;
+	background-color: #73A8AF;
+	border-radius: 10px;
+	display: inline-block;
+	color: #FFF;
+	position: relative;
+	z-index: 2;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.person, .computer {
+	top: -5px;
+	left: -2px;
+}
+.person:hover, .computer:hover {
+	top: 1px;
+	left: 4px;
+}
+
+.leftPlayer {
+	float: left;
+	margin-right: 40px;
+}
+
+.bottom {
+	background-color: #495453;
+	width: 100px;
+	height: 50px;
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+	border-radius: 10px;
+	left: -100px;
+	top: 21px;
+}
+
+.top:hover {
+	cursor: pointer;
+}
+
+.controls {
+	visibility: hidden;
+	width: 30px;
+	position: relative;
+	left: 170px;
+	top: 20px;
+}
+
+.pausePlay {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	background-color: #73A8AF;
+	text-align: center;
+	position: relative;
+	z-index: 2;
+}
+
+.pauseBkg {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	background-color: #495453;
+	z-index: 1;
+	position: relative;
+	top: -75px;
+	left: 4px;
+}
+
+.pausePlay:hover {
+	cursor: pointer;
+	top: 5px;
+	left: 4px;
+}
+
+.pausePlay .fa-play, .pausePlay .fa-pause {
+	color: #FFF;
+	font-size: 3em;
+	margin-top: 15px;
+}
+
+.person p, .computer p {
+	text-align: center;
+}
+
+.playagain {
+	display: block;
+	text-align: center;
+	padding-top: 1px;
+}
+
+.btnBackground {
+	top: -45px;
+	left: 5px;
+}
+
+.playagain:hover {
+	cursor: pointer;
+	top: 5px;
+	left: 5px;
+}
+
+
+.leftPlayer, .rightPlayer {
+	display: inline-block;
+	visibility: hidden;
+}
+
+.submitTop {
+	text-align: center;
+}
+
+.submitTop:hover {
+	top: 4px;
+	left: 4px;
+}
+
+.submitBtm {
+	top: 24px;
+}

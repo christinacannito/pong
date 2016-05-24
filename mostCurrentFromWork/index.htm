@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>animation frame</title>
+</head>
+<body>
+
+	<canvas id="myCanvas" style="border:5px solid #D6E6C3;" width="500" height="400"></canvas>
+
+	<button onclick="start_animation()">Start Animation</button>
+	<button onclick="cancel_animation()">Cancel Animation</button>
+	<div id="box" style="width: 20px; height: 20px; background-color: #C8D9BF;"></div>
+
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		var positionOne = 0;
+		var positionTwo = 200; 
+		var positionThree = 500; 
+		var positionFour = 200;
+		var area = $('#myCanvas');
+		var line = area[0].getContext('2d');
+		line.moveTo(positionOne,positionTwo);
+		line.lineTo(positionThree, positionFour);
+		line.stroke();
+		// now you will want change the coordinates on click 
+		// lets say for every time you click the up arrow the line moves up 6 points
+		$(document).keydown(function(e){
+			console.log(e.which)
+			if (e.which == 38) {
+				console.log('up key clicked')
+				// here is where you would draw the line in its new spot 
+				var start = null;
+				function move (timestamp) {
+					console.log('positionOne: ', positionOne)
+					console.log('timestamp: ', timestamp)
+					area = $('#myCanvas');
+					line = area[0].getContext('2d');
+					line.moveTo(positionOne,positionTwo - 50);
+					line.lineTo(positionThree, positionFour - 50);
+					line.stroke();
+					window.requestAnimationFrame(move)
+				}
+				window.requestAnimationFrame(move)
+			} else {
+				console.log('no')
+			}
+		})
+
+		// testing for simple div
+		var height = 20;
+		var width = 20;
+		var id = null; 
+
+		function animation() {
+			height ++;
+			width ++;
+			var element = document.getElementById('box');
+			element.style.height = height + 'px';
+			element.style.width = width + 'px';
+
+			id = requestAnimationFrame(animation)
+		}
+
+		function start_animation () {
+			id = requestAnimationFrame(animation)
+		}
+
+		function cancel_animation () {
+			cancelAnimationFrame(id)
+		}
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bouncing ball demo</title>
+</head>
+<body>
+
+	<canvas id="myCanvas" style="border: 2px solid #EEC290" width="500" height="400"></canvas>
+
+	<script type="text/javascript">
+		var context;
+		var x = 100;
+		var y = 200; 
+		var dx = 5; 
+		var dy = 5;
+
+		var canvasElement = document.getElementById('myCanvas');
+		context = canvasElement.getContext('2d');
+		
+
+		setInterval(draw, 10)
+
+		function draw () {
+			console.log('inside draw')
+			context.clearRect(0, 0, 500, 400)
+			context.beginPath();
+			context.fillStyle = "#EEC290";
+			context.arc(x, y, 20, 0, Math.PI * 2, true);
+			context.closePath();
+			context.fill();
+			// boundary logic 
+			if (x < 0 || x > 500) dx=-dx;
+			console.log('dx=-dx: ', dx=-dx);
+			if (y < 0 || y > 400) dy=-dy;
+			x+=dx;
+			y+=dy;
+		}
+	</script>
+
+</body>
+</html>
