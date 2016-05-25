@@ -1,167 +1,224 @@
 $(document).ready(function(){
-	// drawing the table
-	var table = $('#table'); // get the canvas element
-	// console.log("table: ", table)	
-	var line = table[0].getContext('2d'); // getContext ?
-	line.beginPath();
-	line.moveTo(0, 200);  // starting point
-	line.lineTo(800, 200); // end point
-	line.strokeStyle = "#EDBBA2";
-	line.lineWidth = 5;
-	line.stroke(); // draw the line
 
-	// requestAnimationFrame for all browsers
-	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-	// variable for the animation
-	var counter = 0;
-	var id;
+	$('.pausePlay').on('click', function(){
+		console.log('play clicked')
+		if($('.fa').hasClass('fa-play')) {
+			$('.fa').removeClass('fa-play');
+			$('.fa').addClass('fa-pause')
+			
+			cancelAnimationFrame(animationId);
+		} else if ($('.fa').hasClass('fa-pause')) {
+			$('.fa').removeClass('fa-pause');
+			$('.fa').addClass('fa-play')
+			animate();
+		} 
+	})
 
-	var increment = 2;
-	var decrement = -2;
+    var table = $('#table'); // gets the canvas element
+    var tableContext = table[0].getContext('2d');
 
-	// the prototype for the paddles
-	function Paddle(speed, x, y) {
-		this.speed= speed;
-		this.paddleContext = table[0].getContext('2d');
-		this.x = x;
-		this.y = y;
-		this.render = function (x, y) {
-			this.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
-			this.paddleContext.rect(this.x, this.y, 50, 100); // x, y, width, height
-			this.paddleContext.stroke();
-		}
-		console.log('outside x:', this.x, 'y: ', this.y)
-		
-		var animate = function (timestamp) {// paddle here is the paddle object
-			// (x, y, width, height)
-			self.paddleContext.clearRect(self.x, self.y, 55, 400); // needs to clear what was there
-			// then redraw the paddles
-			console.log('y: ', self.y)
-			self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
-			self.y += decrement; // global var -- have to be able to pass this
-			self.paddleContext.rect(self.x, self.y, 50, 100); // x, y, width, height
-			self.paddleContext.stroke();
-			counter += 1; // keeps track of the steps
-			if (counter < 20) { // once counter is equal to 20 it will stop
-				id = requestAnimationFrame(animate)
-				console.log('id: ', id)
-			}
-			id = requestAnimationFrame(animate);
-			window.cancelAnimationFrame(id);
-		}
-		var self = this;
-		this.move = function(location) {
-			console.log('inside move')
-			if (location == 'left') {
-				$(window).on('keydown', function(e){
-					// this inside here refers to the keydown
-					if ( e.which == 38 ) {
-						console.log('up was pressed');
-						// Inside here is where you want the animation to take place
-						// animation of the paddles
-						if (self.y >= 0 && self.y < 296) {
- 							animate(); // will only animate within these pixels
-						} else if (self.y > 294) {
-							animate()
-							console.log('self.y: ', self.y)
-						}
-					} else if ( e.which == 40 ) {
-						console.log('down was pressed');
-						// function animate (timestamp) { // paddle here is the paddle object
-						// 	// (x, y, width, height)
-						// 	console.log('x: ', self.x, 'y: ', self.y)
-						// 	// if y == 262 then you can't go down any further
+    var halfWay = table.height() / 2;
+    var endPoint = table.width();
+    var canvasWidth = table.width();
+    var canvasHeight = table.height();
 
-						// 	self.paddleContext.clearRect(self.x, self.y - 100, 55, 400); // needs to clear what was there
-						// 	self.paddleContext.beginPath(); // WILL NOT CLEAR WITHOUT THIS
-						// 	self.y += increment; //global var
-						// 	self.paddleContext.rect(self.x, self.y, 50, 100); // x, y, width, height
-						// 	self.paddleContext.stroke();
+    var leftPaddleScore = 0;
+    var rightPaddleScore = 0;
 
-						// 	counter += 1; // keeps track of the steps
+    var animationId;
 
-						// 	console.log('counter: ', counter)
+    function drawCanvas () {
+		tableContext.beginPath();
+        tableContext.rect(5, 5, canvasWidth - 10, canvasHeight - 10);
+        tableContext.fillStyle = "#FAFBE3";
+        tableContext.fill();
+        tableContext.closePath();
 
-						// 	if (counter < 20) { // once counter is equal to 20 it will stop
-						// 		id = requestAnimationFrame(animate)
-						// 	}
+        tableContext.beginPath();
+        tableContext.moveTo(0, halfWay);  // starting point
+        tableContext.lineTo(endPoint, halfWay); // end point
+        tableContext.strokeStyle = "#EDBBA2";
+        tableContext.lineWidth = 5;
+        tableContext.stroke(); // draw the tableContext
+        tableContext.closePath();
+    } // just to draw the actual table
 
-						// 	id = requestAnimationFrame(animate);
-						// 	window.cancelAnimationFrame(id);
-						// }
-						if (self.y >= 0 && self.y < 296) {
- 							animate(); // will only animate within these pixels
-						} else if (self.y < 0) {
-							animate()
-						} else {
-							// do not animate
-						}
-					}
-				})
-			} else if (location == 'right') {
-				$(window).on('keydown', function(e){
-					// this inside here refers to the keydown
-					if ( e.which == 65 ) {
-						console.log('up was pressed');
-						// Inside here is where you want the animation to take place
-						// animation of the paddles
-						if (self.y >= 0 && self.y < 296) {
- 							self.animate(); // will only animate within these pixels
-						} else if (self.y > 294) {
-							self.animate()
-						}
-					} else if ( e.which == 90 ) {
-						console.log('down was pressed');
+    function Paddle (x, y, width, height, speed, paddleSide) {
+        this.x = x; // current x
+        this.y = y; // current y
+        this.width = width;
+        this.height = height;
+        this.speed = speed;
+        this.paddleSide = paddleSide;
+        this.render = function() {
+            tableContext.beginPath();
+            tableContext.rect(this.x, this.y, width, height);
+            tableContext.fillStyle = "#B2B6AB";
+            tableContext.fill();
+            tableContext.closePath();
+        } // this will draw the object
+        var paddleObject = this;
+        this.move = function () {
+            $(window).keydown(function(e){
+                if (paddleObject.paddleSide  == "left") {
+                    console.log('was left')
+                    console.log('paddleObject.y <= canvasHeight - paddleObject.height: ',paddleObject.y <= canvasHeight - paddleObject.height)
+                    console.log('canvasHeight - paddleObject.height: ', canvasHeight - paddleObject.height)
+                    if (e.which == 90 && (paddleObject.y <= 300)) { // going down 
+                        console.log('up was pressed')
+                        console.log('paddleObject.y: ', paddleObject.y )     
+                        // move up 7 spaces (along Y)
+						paddleObject.y += 10;
+						// canvasHeight - paddleObject.height is always going to be 300
+                    } else if (e.which == 65 && paddleObject.y >= 0) { // this is going up
+                        paddleObject.y -= 10; 
+                    }
+                } else if (paddleObject.paddleSide == "right") {
+                    if (e.which == 38 && paddleObject.y >= 0) {
+                        paddleObject.y -= 10;                                                
+                    } else if (e.which == 40 && paddleObject.y <= canvasHeight - paddleObject.height) {
+                        paddleObject.y += 10;
+                    }
+                }
+            })
+        }             
+    }
+ 
+ 	// function Ball (x, y, radius, leftPaddle, rightPaddle) (best)
+    function Ball (x, y, radius) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.speedX = 2;
+        this.speedY = -2;
+        this.render = function() {
+            tableContext.beginPath();
+            tableContext.arc(this.x, this.y, this.radius, 0, Math.PI *2);
+            tableContext.fillStyle = "#F2DFCA";
+            tableContext.fill();
+            tableContext.closePath();
 
-						if (self.y >= 0 && self.y < 296) {
- 							self.animate(); // will only animate within these pixels
-						} else if (self.y < 0) {
-							self.animate()
-						} else {
-							// do not animate
-						}
-					}
-				})
-			}
-		}
-	} // paddle object
+            if ( this.y + this.speedY + this.radius < 0 ) {
+                this.speedY = -this.speedY;
+            } // this is for the top wall
+
+            if (this.y + this.speedY + this.radius > canvasHeight) {
+                this.speedY = -this.speedY;
+            } // this is for the bottom
+
+            // bouncing off left and right
+            // if the ball hits these two wall then a point is scored
+            var rightPaddleWall = canvasWidth - this.radius - rightPaddle.width;
+            var rightPaddleTopY = rightPaddle.y;
+            var rightPaddleBottomY = rightPaddle.y + rightPaddle.height;
+            if (this.x + this.speedX > rightPaddleWall) { // solves for x
+                if ((this.y + this.speedY < rightPaddleBottomY ) && (this.y + this.speedY > rightPaddleTopY)) { // solves for y
+                    this.speedX = -this.speedX;
+                }
+                // hits the paddle  
+            } // right side wall 
+
+            // this is ONLY FOR THE WALL
+            if (this.x + this.speedX + this.radius > canvasWidth) { // right side wall // FACTOR IN FOR THE PADDLE 
+                // left paddle has scored a point
+                this.speedX = -this.speedX;
+                if (leftPaddleScore == 0) { // points to that the game will go up to
+                	tableContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
+                	// tableContext.beginPath();
+					tableContext.beginPath();
+                	tableContext.rect(20, 20, 760, 360);
+                	tableContext.fillStyle = "#B2B6AB";
+                	tableContext.fill();
+                	tableContext.closePath();
+
+                	tableContext.font = "30px Arial";
+                	tableContext.fillStyle = "#FFF";
+                	tableContext.textAlign = "center";
+                	tableContext.Baseline = "top";
+                	tableContext.fillText("Left player won!", 400, 200);
+
+                    $('.controls').css('visibility', 'hidden')
+                   	$('.winner').css('visibility', 'visible')
+                	$('.playagain').on('click', function(){
+                		location.reload(); // should create a new game 
+                	})
+
+                	cancelAnimationFrame(animationId);
+                } else {
+                	leftPaddleScore += 1;
+                }
+            }
+
+            // solving for the left side paddle
+            var leftPaddleWall = this.radius + leftPaddle.width;
+            var leftPaddleTopY = leftPaddle.y;
+            var leftPaddleBottomY = leftPaddle.y + leftPaddle.height;
+			if (this.x + this.speedX < leftPaddleWall) { // solves for x
+                console.log('ball hit paddle')
+                console.log()
+                if ((this.y + this.speedY > leftPaddleBottomY) && (this.y + this.speedY < leftPaddleTopY)) { // solves for y
+                    this.speedX = -this.speedX;
+                }
+                // hits the paddle  
+            } // right side wall 
+            if (this.x + this.speedX + this.radius < 0) { // left side // FACTOR IN FOR THE PADDLE
+                // right paddle scores
+                // rightPaddleScore += 1;
+                rightPaddleScore += 1;
+                this.speedX = -this.speedX
+            }
+
+            this.x += this.speedX;
+            this.y += this.speedY;
+        } // this will draw the object
+    } // end of ball object
+ 
+    function drawScore () {
+        tableContext.beginPath();
+        tableContext.font = "30px Trebuchet MS";
+        tableContext.fillStyle = "#BD5532";
+        tableContext.textAlign = "center";
+        tableContext.fillText("Left player score: " + leftPaddleScore, 150, 350);
+        tableContext.fillText("Right player score: " + rightPaddleScore, 600, 350);
+        tableContext.closePath();
+    }
+
+    var paddleHeight = 100;
+    var paddleWidth = 50;
+    var leftPaddle = new Paddle(0, 10, paddleWidth, paddleHeight, 2, "left");
+    var rightPaddle = new Paddle(750, 20, paddleWidth, paddleHeight, 2, "right");
+    rightPaddle.move();
+    leftPaddle.move();
+    var ballRadius = 20;
+    var ballX = Math.random() * (800 - 50) + 50;
+    var ballY = Math.random() * (400 - 100) + 100;
+    var firstBall = new Ball(ballX, ballY, ballRadius, leftPaddle, rightPaddle);
 
 
-	// move animation function outside of the paddle object
+    var requestAnimationFrame = window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame    ||
+    window.oRequestAnimationFrame      ||
+    window.msRequestAnimationFrame     ||
+    function(callback) { window.setTimeout(callback, 1000/60) };
+ 
+    function animate() {
+    	animationId = requestAnimationFrame(animate);
+	    tableContext.clearRect(0, 0, canvasWidth, canvasHeight);
+        drawCanvas();
+        rightPaddle.render();
+        leftPaddle.render();
+        firstBall.render()
+	    drawScore();
+	    
+    }
 
-	// might change the parameters here
-	function Player (paddle) {
-		this.paddle = new Paddle(0, 200, 20, 20);
-		console.log('paddle btm: ', this.paddle)
-	} // player object
-
-	function Computer (paddle) {
-		this.paddle = new Paddle(200, 800, 20, 20);
-
-	} // computer object
-
-	function Ball (ballx, bally) {
-		// inside here you are just going to draw the ball and place it on the canvas
-		this.ballx = ballx;
-		this.bally = bally;
-		this.render = function(){
-			var ball = table[0].getContext('2d');
-			ball.beginPath();
-			ball.arc(this.ballx, this.bally, 50, 0, 2 * Math.PI) // x, y, radius, s angle, e angle
-			ball.stroke();
-		}
-	}
-
-	// drawing, creating the objects
-	var firstBall = new Ball(200, 100);
-	firstBall.render(); // draws the ball
-
-	var leftPaddle = new Paddle(20, 0, 100);
-	leftPaddle.render(0, 100);
-	leftPaddle.move('left'); // keycodes up || down
-	// next you are going to want to move the paddle
-
-	var rightPaddle = new Paddle(20, 750, 100);
-	rightPaddle.render(750, 100);
-	rightPaddle.move('right') // want different keycodes...use z||a 
-});
+    $('.person').on('click', function(){
+        // show users to enter in their names
+        $('.controls').css('visibility', 'visible')
+        $('.startOfGame').css({'visibility': 'hidden', 'width': '0', 'height': '0'});
+        $('.board').css('visibility', 'visible')
+        animate();
+    })
+})
