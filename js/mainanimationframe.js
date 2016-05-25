@@ -92,11 +92,12 @@ $(document).ready(function(){
         this.speedY = -2;
         this.render = function() {
             tableContext.beginPath();
-            tableContext.arc(this.x, this.y, this.radius, 0, Math.PI *2);
+            tableContext.arc(this.x, this.y, this.radius, 0, Math.PI*2);
             tableContext.fillStyle = "#F2DFCA";
             tableContext.fill();
             tableContext.closePath();
 
+            console.log("ballY: ", this.y, "ballX: ", this.x)
             if ( this.y + this.speedY + this.radius < 0 ) {
                 this.speedY = -this.speedY;
             } // this is for the top wall
@@ -111,7 +112,8 @@ $(document).ready(function(){
             var rightPaddleTopY = rightPaddle.y;
             var rightPaddleBottomY = rightPaddle.y + rightPaddle.height;
             if (this.x + this.speedX > rightPaddleWall) { // solves for x
-                if ((this.y + this.speedY < rightPaddleBottomY ) && (this.y + this.speedY > rightPaddleTopY)) { // solves for y
+                console.log('ballX: ', ballX, 'ballY: ', ballY)
+                if ((this.y + this.speedY + 20 <= rightPaddleBottomY) && (this.y + this.speedY + 20 >= rightPaddleTopY)) { // solves for y
                     this.speedX = -this.speedX;
                 }
                 // hits the paddle  
@@ -160,9 +162,10 @@ $(document).ready(function(){
             var leftPaddleTopY = leftPaddle.y;
             var leftPaddleBottomY = leftPaddle.y + leftPaddle.height;
 			if (this.x + this.speedX < leftPaddleWall) { // solves for x
-                console.log('ball hit paddle')
-                console.log()
-                if ((this.y + this.speedY < leftPaddleBottomY) && (this.y + this.speedY > leftPaddleTopY)) { // solves for y
+                console.log('ballX: ', ballX, 'ballY: ', ballY)
+                console.log('leftPaddleTopY: ', leftPaddleTopY, 'leftPaddleBottomY: ', leftPaddleBottomY)
+                if ((this.y + this.speedY + 20 <= leftPaddleBottomY + 20) && (this.y + this.speedY + 20 >= leftPaddleTopY + 20)) { // solves for y
+                    // needs to be at least at the wall starting point 
                     this.speedX = -this.speedX;
                 }
                 // hits the paddle  
