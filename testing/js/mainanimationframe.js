@@ -1,7 +1,3 @@
-// $(window).load(function(){
-//     $('.loading').fadeOut('fast');
-// });
-
 $(document).ready(function(){
 
 	$('.pausePlay').on('click', function(){
@@ -160,12 +156,13 @@ $(document).ready(function(){
             var leftPaddleBottomY = leftPaddle.y + leftPaddle.height;
 			if (this.x + this.speedX < leftPaddleWall) { // solves for x
                 console.log('ball hit paddle')
-                if ((this.y + this.speedY < leftPaddleBottomY) && (this.y + this.speedY > leftPaddleTopY)) { // solves for y
+                console.log()
+                if ((this.y + this.speedY > leftPaddleBottomY) && (this.y + this.speedY < leftPaddleTopY)) { // solves for y
                     this.speedX = -this.speedX;
                 }
                 // hits the paddle  
             } // right side wall 
-            if (this.x + this.speedX + this.radius  < 0) { // left side // FACTOR IN FOR THE PADDLE
+            if (this.x + this.speedX + this.radius < 0) { // left side // FACTOR IN FOR THE PADDLE
                 // right paddle scores
                 // rightPaddleScore += 1;
                 rightPaddleScore += 1;

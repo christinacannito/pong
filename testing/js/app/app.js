@@ -5,15 +5,15 @@ var pong = angular.module('pong', ['ngRoute']);
 pong.config(['$routeProvider', function($routeProvider){
 	$routeProvider.
 		when('/login', {
-			templateUrl: 'views/login.html',
+			templateUrl: '/testing/js/app/views/login.html',
 			controller: 'RegistrationController'
 		}).
 		when('/register', {
-			templateUrl: 'views/register.html',
+			templateUrl: '/testing/js/app/views/register.html',
 			controller: 'RegistrationController'
 		}).
 		when('/success', {
-			templateUrl: 'views/success.html',
+			templateUrl: '/testing/js/app/views/success.html',
 			controller: 'SuccessController'
 		}).
 		otherwise({

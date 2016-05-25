@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html ng-app="pong">
+<html >
+<!-- ng-app="pong" -->
 <head>
 	<title>Pong</title>
 	<link rel="stylesheet" type="text/css" href="styles.css">
@@ -8,23 +9,23 @@
 	<link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
 
 	<!-- angular lib files -->
-	<script src="js/app/lib/angular.min.js"></script>
+<!-- 	<script src="js/app/lib/angular.min.js"></script>
 	<script src="js/app/lib/angular-route.min.js"></script>
-	<script src="js/app/lib/angular-animate.min.js"></script>
+	<script src="js/app/lib/angular-animate.min.js"></script> -->
 
 
-	<script src="js/app/app.js"></script>
+<!-- 	<script src="js/app/app.js"></script>
 	<script src="js/app/controllers/registration.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 	
-	<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script> -->
 	<script   src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="js/mainanimationframe.js"></script>
 </head>
 	<body>
 		<!-- <section class="loading"></section> -->
 		<section class="startOfGame">
-			<h2>{{message}}</h2>
+			<!-- <h2>{{message}}</h2> -->
 			<h1>Welcome to Pong!</h1>
 
 			<p>Rules of the game:</p>
@@ -48,8 +49,10 @@
 
 			<section class="names" ng-view>
 				<article class="leftPlayer">
-					<p>Left paddle: <input type="text" ng-model="leftName"></p>
-					<p>Left paddle: <span ng-bind="leftName"></span></p>
+					<!-- <input type="text" ng-model="leftName"> -->
+					<p>Left paddle: </p>
+					<!-- <span ng-bind="leftName"></span> -->
+					<p>Left paddle: </p>
 					<div class="submitTop top">
 						<p>Enter</p>
 					</div>
