@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
 	$('.pausePlay').on('click', function(){
 		console.log('play clicked')
 		if($('.fa').hasClass('fa-play')) {
@@ -122,7 +121,7 @@ $(document).ready(function(){
             if (this.x + this.speedX + this.radius > canvasWidth) { // right side wall // FACTOR IN FOR THE PADDLE 
                 // left paddle has scored a point
                 this.speedX = -this.speedX;
-                if (leftPaddleScore == 0) { // points to that the game will go up to
+                if (leftPaddleScore == 1) { // points to that the game will go up to
                 	tableContext.clearRect(0, 0, canvasWidth, canvasHeight);
 
                 	// tableContext.beginPath();
@@ -136,7 +135,13 @@ $(document).ready(function(){
                 	tableContext.fillStyle = "#FFF";
                 	tableContext.textAlign = "center";
                 	tableContext.Baseline = "top";
-                	tableContext.fillText("Left player won!", 400, 200);
+                	if (leftPaddleScore > rightPaddleScore) {
+                        tableContext.fillText("Left player won!", 400, 200 );
+                    } else if (leftPaddleScore < rightPaddleScore) {
+                        tableContext.fillText("Right player won!", 400, 200 );
+                    } else {
+                        tableContext.fillText("Tie!", 400, 200 );
+                    }
 
                     $('.controls').css('visibility', 'hidden')
                    	$('.winner').css('visibility', 'visible')
@@ -157,7 +162,7 @@ $(document).ready(function(){
 			if (this.x + this.speedX < leftPaddleWall) { // solves for x
                 console.log('ball hit paddle')
                 console.log()
-                if ((this.y + this.speedY > leftPaddleBottomY) && (this.y + this.speedY < leftPaddleTopY)) { // solves for y
+                if ((this.y + this.speedY < leftPaddleBottomY) && (this.y + this.speedY > leftPaddleTopY)) { // solves for y
                     this.speedX = -this.speedX;
                 }
                 // hits the paddle  
@@ -165,8 +170,40 @@ $(document).ready(function(){
             if (this.x + this.speedX + this.radius < 0) { // left side // FACTOR IN FOR THE PADDLE
                 // right paddle scores
                 // rightPaddleScore += 1;
-                rightPaddleScore += 1;
                 this.speedX = -this.speedX
+                // set up scoring: 
+                if (rightPaddleScore == 1) { // points to that the game will go up to
+                    tableContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
+                    // tableContext.beginPath();
+                    tableContext.beginPath();
+                    tableContext.rect(20, 20, 760, 360);
+                    tableContext.fillStyle = "#B2B6AB";
+                    tableContext.fill();
+                    tableContext.closePath();
+
+                    tableContext.font = "30px Arial";
+                    tableContext.fillStyle = "#FFF";
+                    tableContext.textAlign = "center";
+                    tableContext.Baseline = "top";
+                    if (leftPaddleScore > rightPaddleScore) {
+                        tableContext.fillText("Left player won!", 400, 200 );
+                    } else if (leftPaddleScore < rightPaddleScore) {
+                        tableContext.fillText("Right player won!", 400, 200 );
+                    } else {
+                        tableContext.fillText("Tie!", 400, 200 );
+                    }
+
+                    $('.controls').css('visibility', 'hidden')
+                    $('.winner').css('visibility', 'visible')
+                    $('.playagain').on('click', function(){
+                        location.reload(); // should create a new game 
+                    })
+
+                    cancelAnimationFrame(animationId);
+                } else {
+                    rightPaddleScore += 1;
+                }
             }
 
             this.x += this.speedX;
