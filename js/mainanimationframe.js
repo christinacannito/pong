@@ -198,16 +198,23 @@ $(document).ready(function(){
                     // needs to be at least at the wall starting point
                     // solves for the front side of the paddle
                     console.log('hitting the front of the paddle')
-                    this.speedX = -this.speedX;
+                    this.speedX = (-this.speedX);
                     Math.floor(this.speedX);
                  }
 
-                if ( ((Math.floor(this.y) + Math.floor(this.radius)) == leftPaddle.y) ) {
+                if ( ((Math.floor(this.y) + Math.floor(this.radius)) <= leftPaddle.y) ) {
                     // hit the top of the paddle
                     console.log('solving for the top of the paddle')
                     this.speedY = -this.speedY;
+                    Math.floor(this.speedY); // ball hitting the top of the paddle
+                }  
+
+
+                if ( ((Math.floor(this.y) - this.radius) <= (leftPaddle.y + leftPaddle.height)) ) {
+                    console.log('solving for the top of the paddle')
+                    this.speedY = -this.speedY;
                     Math.floor(this.speedY);
-                }
+                } // ball hitting the bottom of the paddle 
                 // hits the paddle
             } // right side wall -----
  
