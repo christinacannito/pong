@@ -198,7 +198,7 @@ $(document).ready(function(){
                     // needs to be at least at the wall starting point
                     // solves for the front side of the paddle
                     console.log('hitting the front of the paddle')
-                    this.speedX = (-this.speedX);
+                    this.speedX = -this.speedX;
                     Math.floor(this.speedX);
                  }
 
