@@ -141,7 +141,7 @@ $(document).ready(function(){
             var rightPaddleTopY = rightPaddle.y;
             var rightPaddleBottomY = rightPaddle.y + rightPaddle.height;
             if (Math.floor(this.x) + Math.floor(this.speedX) > rightPaddleWall) { // solves for x
-                console.log('ballX: ', ballX, 'ballY: ', ballY)
+                // console.log('ballX: ', ballX, 'ballY: ', ballY)
                 if ((this.y + this.speedY <= rightPaddleBottomY) && (this.y + this.speedY >= rightPaddleTopY) || (this.y + this.speedY <= rightPaddleBottomY) && (this.y + this.speedY <= 50)) { // solves for y
                     this.speedX = -this.speedX;
                 }
@@ -191,28 +191,25 @@ $(document).ready(function(){
             var leftPaddleWall = this.radius + leftPaddle.width;
             var leftPaddleTopY = leftPaddle.y;
             var leftPaddleBottomY = leftPaddle.y + leftPaddle.height;
-            if (Math.floor(this.x) + Math.floor(this.speedX) <= leftPaddleWall) { // solves for x
+            if (Math.floor(this.x) <= leftPaddleWall) { // will detect the left paddle wall
                 // console.log('ballX: ', Math.floor(ballX), 'ballY: ', Math.floor(ballY))
                 // console.log('leftPaddleTopY: ', leftPaddleTopY, 'leftPaddleBottomY: ', leftPaddleBottomY)
-                if ((Math.floor(this.y) + Math.floor(this.speedY) + this.radius <= leftPaddleBottomY) && (Math.floor(this.y) + Math.floor(this.speedY) + this.radius >= leftPaddleTopY)) { // solves for y
+                if ((this.y + this.speedY + this.radius <= leftPaddleBottomY) && (this.y + this.speedY + this.radius >= leftPaddleTopY)) { // solves for y
                     // needs to be at least at the wall starting point
+                    // solves for the front side of the paddle
+                    console.log('hitting the front of the paddle')
                     this.speedX = -this.speedX;
                     Math.floor(this.speedX);
-                } else if ( ((Math.floor(this.x) + Math.floor(this.speedX) + this.radius) >= leftPaddle.y) && (Math.floor(this.x) + Math.floor(this.speedX) + this.radius) <= 50) {
-                     // hit the top of the paddle
-                     console.log('solving for the top of the paddle')
-                     this.speedX = -this.speedX;
-                     Math.floor(this.speedX);
-                } else if ( ((Math.floor(this.y) + Math.floor(this.speedY) + this.radius) <= (leftPaddle.y + leftPaddle.height)) || (Math.floor(this.x) + Math.floor(this.speedX) + this.radius) <= 50) {
-                     // hit the BOTTOM of the paddle
-                     console.log('ballX: ', this.x, 'ballY: ', this.y)
-                     console.log('leftPaddleTopY: ', leftPaddle.y, 'leftPaddleBottomY: ', leftPaddle.y + leftPaddle.height)
-                     console.log('solving for the bottom of the paddle')
-                     this.speedX = -this.speedX;
-                     Math.floor(this.speedX);
+                 }
+
+                if ( ((Math.floor(this.y) + Math.floor(this.radius)) == leftPaddle.y) ) {
+                    // hit the top of the paddle
+                    console.log('solving for the top of the paddle')
+                    this.speedY = -this.speedY;
+                    Math.floor(this.speedY);
                 }
                 // hits the paddle
-            } // right side wall
+            } // right side wall -----
  
             if (Math.floor(this.x) + Math.floor(this.speedX) < 0 + this.radius) { // left side // FACTOR IN FOR THE PADDLE
                 // right paddle scores
