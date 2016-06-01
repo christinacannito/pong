@@ -16,6 +16,14 @@ $(document).ready(function(){
             })
         });
     })
+
+    $('.yesNo').on('click', function(){
+        $('.rulesInfo').animate({
+            opacity: 0
+        }, 2000, function(){
+            
+        })
+    })
  
     var table = $('#table'); // gets the canvas element
     var tableContext = table[0].getContext('2d');
