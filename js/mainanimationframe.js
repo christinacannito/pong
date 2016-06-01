@@ -1,24 +1,37 @@
 $(document).ready(function(){
+    // enter button
+    $('.enterBtn').on('click', function(){
+        console.log('enter button clicked')
+        $('.outline').animate({
+            top: -($('.outline').height() + $('.outline').offset().top + 10),
+            opacity: 0
+        }, 2000, function(){
+            console.log('animation complete')
+            // make another div appear
+            $('.rules').animate({
+                opacity: 1,
+                top: '-200px'
+            }, 2000, function(){
+                console.log('rules should be showing')
+            })
+        });
+    })
+ 
     var table = $('#table'); // gets the canvas element
     var tableContext = table[0].getContext('2d');
- 
     var halfWay = table.height() / 2;
     var endPoint = table.width();
     var canvasWidth = table.width();
     var canvasHeight = table.height();
- 
     var leftPaddleScore = 0;
     var rightPaddleScore = 0;
- 
     var animationId;
- 
     function drawCanvas () {
         tableContext.beginPath();
         tableContext.rect(5, 5, canvasWidth - 10, canvasHeight - 10);
         tableContext.fillStyle = "#FAFBE3";
         tableContext.fill();
         tableContext.closePath();
- 
         tableContext.beginPath();
         tableContext.moveTo(0, halfWay);  // starting point
         tableContext.lineTo(endPoint, halfWay); // end point
@@ -27,7 +40,6 @@ $(document).ready(function(){
         tableContext.stroke(); // draw the tableContext
         tableContext.closePath();
     } // just to draw the actual table
- 
     function Paddle (x, y, width, height, speed, paddleSide) {
         this.x = x; // current x
         this.y = y; // current y
@@ -57,7 +69,7 @@ $(document).ready(function(){
                     } else {
                         paddleObject.y = 1;
                     }
-                   
+                  
                 }, 200)
             } else if (aiType == 'autoTwo') {
                 window.setInterval(function(){
@@ -90,7 +102,7 @@ $(document).ready(function(){
                         }
                     } else if (paddleObject.paddleSide == "right") {
                         if (e.which == 38 && paddleObject.y >= 0) {
-                            paddleObject.y -= 10;                             
+                            paddleObject.y -= 10;                            
                         } else if (e.which == 40 && paddleObject.y <= canvasHeight - paddleObject.height) {
                             paddleObject.y += 10;
                         }
@@ -115,39 +127,67 @@ $(document).ready(function(){
                 speedX: self.speedX,
                 speedY: self.speedY
             };
-        };  
+        }; 
         this.render = function() {
             tableContext.beginPath();
             tableContext.arc(this.x, this.y, this.radius, 0, Math.PI*2);
             tableContext.fillStyle = "#F2DFCA";
             tableContext.fill();
             tableContext.closePath();
- 
             console.log("ballY: ", Math.floor(this.y), "ballX: ", Math.floor(this.x))
             if ( Math.floor(this.y) + Math.floor(this.speedY) < 0 + this.radius) {
                 console.log('inside if for')
                 this.speedY = -this.speedY;
                 Math.floor(this.speedY)
             } // this is for the top wall
- 
             if (Math.floor(this.y) + Math.floor(this.speedY) + this.radius > canvasHeight) {
                 this.speedY = -this.speedY;
                 Math.floor(this.speedY)
             } // this is for the bottom
- 
             // bouncing off left and right
             // if the ball hits these two wall then a point is scored
+            // var rightPaddleWall = canvasWidth - this.radius - rightPaddle.width;
+            // var rightPaddleTopY = rightPaddle.y;
+            // var rightPaddleBottomY = rightPaddle.y + rightPaddle.height;
+            // if (Math.floor(this.x) + Math.floor(this.speedX) > rightPaddleWall) { // solves for x
+            //     // console.log('ballX: ', ballX, 'ballY: ', ballY)
+            //     if ((this.y + this.speedY <= rightPaddleBottomY) && (this.y + this.speedY >= rightPaddleTopY) || (this.y + this.speedY <= rightPaddleBottomY) && (this.y + this.speedY <= 50)) { // solves for y
+            //         this.speedX = -this.speedX;
+            //     }
+            //     // hits the paddle
+            // } // right side wall
+            // // SOLVES FOR RIGHT PADDLE
+ 
+            // SOVLING FOR TOP, BOTTOM, AND FRONT OF RIGHT PADDLE
+                       // solving for the left side paddle
             var rightPaddleWall = canvasWidth - this.radius - rightPaddle.width;
             var rightPaddleTopY = rightPaddle.y;
             var rightPaddleBottomY = rightPaddle.y + rightPaddle.height;
-            if (Math.floor(this.x) + Math.floor(this.speedX) > rightPaddleWall) { // solves for x
-                // console.log('ballX: ', ballX, 'ballY: ', ballY)
-                if ((this.y + this.speedY <= rightPaddleBottomY) && (this.y + this.speedY >= rightPaddleTopY) || (this.y + this.speedY <= rightPaddleBottomY) && (this.y + this.speedY <= 50)) { // solves for y
+            if (Math.floor(this.x) >= rightPaddleWall) { // will detect the RIGHT paddle wall
+                // console.log('ballX: ', Math.floor(ballX), 'ballY: ', Math.floor(ballY))
+                // console.log('leftPaddleTopY: ', leftPaddleTopY, 'leftPaddleBottomY: ', leftPaddleBottomY)
+                if ((this.y + this.speedY + this.radius <= rightPaddleBottomY) && (this.y + this.speedY + this.radius >= rightPaddleTopY)) {
+                    // needs to be at least at the wall starting point
+                    // solves for the front side of the paddle
+                    console.log('RIGHT PADDLE: hitting the front of the paddle')
                     this.speedX = -this.speedX;
-                }
-                // hits the paddle 
-            } // right side wall
+                    Math.floor(this.speedX);
+                 }
  
+                if ( ((Math.floor(this.y) + Math.floor(this.radius)) <= rightPaddle.y) ) {
+                    // hit the top of the paddle
+                    console.log('RIGHT PADDLE: solving for the top of the paddle')
+                    this.speedY = -this.speedY;
+                    Math.floor(this.speedY); // ball hitting the top of the paddle
+                } 
+ 
+                if ( ((Math.floor(this.y) - this.radius) <= (rightPaddle.y + rightPaddle.height)) ) {
+                    console.log('RIGHT PADDLE: solving for the bottom of the paddle')
+                    this.speedY = -this.speedY;
+                    Math.floor(this.speedY);
+                } // ball hitting the bottom of the paddle
+                // hits the paddle
+            } // RIGHT PADDLE WALL - BALL HITS RIGHT PADDLE
             // this is ONLY FOR THE WALL
             if (Math.floor(this.x) + Math.floor(this.speedX) + this.radius > canvasWidth) { // right side wall // FACTOR IN FOR THE PADDLE
                 // left paddle has scored a point
@@ -155,14 +195,12 @@ $(document).ready(function(){
                 Math.floor(this.speedX)
                 if (leftPaddleScore == 1) { // points to that the game will go up to
                     tableContext.clearRect(0, 0, canvasWidth, canvasHeight);
- 
                     // tableContext.beginPath();
                     tableContext.beginPath();
                     tableContext.rect(20, 20, 760, 360);
                     tableContext.fillStyle = "#B2B6AB";
                     tableContext.fill();
                     tableContext.closePath();
- 
                     tableContext.font = "30px Arial";
                     tableContext.fillStyle = "#FFF";
                     tableContext.textAlign = "center";
@@ -170,23 +208,20 @@ $(document).ready(function(){
                     if (leftPaddleScore > rightPaddleScore) {
                         tableContext.fillText("Left player won!", 400, 200 );
                     } else if (leftPaddleScore < rightPaddleScore) {
-                        tableContext.fillText("Right player won!", 400, 200 );
+                       tableContext.fillText("Right player won!", 400, 200 );
                     } else {
                         tableContext.fillText("Tie!", 400, 200 );
                     }
- 
                     $('.controls').css('visibility', 'hidden')
                        $('.winner').css('visibility', 'visible')
                     $('.playagain').on('click', function(){
                         location.reload(); // should create a new game
                     })
- 
                     cancelAnimationFrame(animationId);
                 } else {
                     leftPaddleScore += 1;
                 }
-            }
- 
+            } // right side wall - SCORES POINT FOR LEFT PADDLE
             // solving for the left side paddle
             var leftPaddleWall = this.radius + leftPaddle.width;
             var leftPaddleTopY = leftPaddle.y;
@@ -194,29 +229,28 @@ $(document).ready(function(){
             if (Math.floor(this.x) <= leftPaddleWall) { // will detect the left paddle wall
                 // console.log('ballX: ', Math.floor(ballX), 'ballY: ', Math.floor(ballY))
                 // console.log('leftPaddleTopY: ', leftPaddleTopY, 'leftPaddleBottomY: ', leftPaddleBottomY)
-                if ((this.y + this.speedY + this.radius <= leftPaddleBottomY) && (this.y + this.speedY + this.radius >= leftPaddleTopY)) { // solves for y
+                if ((this.y + this.speedY + this.radius <= leftPaddleBottomY) && (this.y + this.speedY + this.radius >= leftPaddleTopY)) {
                     // needs to be at least at the wall starting point
                     // solves for the front side of the paddle
                     console.log('hitting the front of the paddle')
                     this.speedX = -this.speedX;
                     Math.floor(this.speedX);
                  }
-
+ 
                 if ( ((Math.floor(this.y) + Math.floor(this.radius)) <= leftPaddle.y) ) {
                     // hit the top of the paddle
                     console.log('solving for the top of the paddle')
                     this.speedY = -this.speedY;
                     Math.floor(this.speedY); // ball hitting the top of the paddle
-                }  
-
-
+                } 
+ 
                 if ( ((Math.floor(this.y) - this.radius) <= (leftPaddle.y + leftPaddle.height)) ) {
-                    console.log('solving for the top of the paddle')
+                    console.log('solving for the bottom of the paddle')
                     this.speedY = -this.speedY;
                     Math.floor(this.speedY);
-                } // ball hitting the bottom of the paddle 
+                } // ball hitting the bottom of the paddle
                 // hits the paddle
-            } // right side wall -----
+            } // LEFT PADDLE WALL - BALL HITS LEFT PADDLE
  
             if (Math.floor(this.x) + Math.floor(this.speedX) < 0 + this.radius) { // left side // FACTOR IN FOR THE PADDLE
                 // right paddle scores
@@ -227,14 +261,12 @@ $(document).ready(function(){
                 // set up scoring:
                 if (rightPaddleScore == 1) { // points to that the game will go up to
                     tableContext.clearRect(0, 0, canvasWidth, canvasHeight);
- 
                     // tableContext.beginPath();
                     tableContext.beginPath();
                     tableContext.rect(20, 20, 760, 360);
                     tableContext.fillStyle = "#B2B6AB";
                     tableContext.fill();
                     tableContext.closePath();
- 
                     tableContext.font = "30px Arial";
                     tableContext.fillStyle = "#FFF";
                     tableContext.textAlign = "center";
@@ -252,19 +284,18 @@ $(document).ready(function(){
                     $('.playagain').on('click', function(){
                         location.reload(); // should create a new game
                     })
- 
                     cancelAnimationFrame(animationId);
                 } else {
                     rightPaddleScore += 1;
-                }
-            }
- 
+                } // right paddle gets a point
+            } // LEFT SIDE WALL - RIGHT PADDLE SCORES POINT
             this.x += this.speedX;
             Math.floor(this.x)
             this.y += this.speedY;
             Math.floor(this.y)
         } // this will draw the object
     } // end of ball object
+   
     function drawScore () {
         tableContext.beginPath();
         tableContext.font = "30px Trebuchet MS";
@@ -274,7 +305,6 @@ $(document).ready(function(){
         tableContext.fillText("Right player score: " + rightPaddleScore, 600, 350);
         tableContext.closePath();
     }
- 
     var paddleHeight = 100;
     var paddleWidth = 50;
     var leftPaddle = new Paddle(0, 10, paddleWidth, paddleHeight, 2, "left");
@@ -282,10 +312,9 @@ $(document).ready(function(){
     rightPaddle.move('person', firstBall);
     leftPaddle.move('person', firstBall);
     var ballRadius = 20;
-    var ballX = Math.random() * (750 - 50) - 50;
-    var ballY = Math.random() * (350 - 100) -  50;
+    var ballX = Math.floor(Math.random() * 700) + 60;
+    var ballY = Math.floor(Math.random() * 300) + 10;
     var firstBall = new Ball(ballX, ballY, ballRadius, leftPaddle, rightPaddle);
- 
  
     var requestAnimationFrame = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
@@ -298,7 +327,7 @@ $(document).ready(function(){
         if($('.fa').hasClass('fa-play')) {
             $('.fa').removeClass('fa-play');
             $('.fa').addClass('fa-pause')
-           
+          
             cancelAnimationFrame(animationId);
         } else if ($('.fa').hasClass('fa-pause')) {
             $('.fa').removeClass('fa-pause');
@@ -306,7 +335,6 @@ $(document).ready(function(){
             animatePerson();
         }
     })
- 
     function animatePerson() {
         animationId = requestAnimationFrame(animatePerson);
         tableContext.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -316,7 +344,6 @@ $(document).ready(function(){
         firstBall.render()
         drawScore();
     } // this is going to be calling these functions about every 60 frames per second
- 
     function animateAi() {
         animationId = requestAnimationFrame(animateAi);
         tableContext.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -326,7 +353,6 @@ $(document).ready(function(){
         firstBall.render()
         drawScore();
     }
- 
     $('.person').on('click', function(){
         // show users to enter in their names
         $('.controls').css('visibility', 'visible')
@@ -334,7 +360,6 @@ $(document).ready(function(){
         $('.board').css('visibility', 'visible')
         animatePerson();
     })
- 
     $('.computer').on('click', function(){
         // show users to enter in their names
         $('.controls').css('visibility', 'visible')

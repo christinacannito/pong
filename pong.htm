@@ -6,14 +6,41 @@
     <script src="https://use.fontawesome.com/8b8cb59dd2.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Hind' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
     <script   src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/mainanimationframe.js"></script>
 </head>
     <body>
-	    <section class="startOfGame">
-            <h1>Welcome to Pong!</h1>
+        <div class="outline">
+            <section class="startOfGame">
+                <h1>PONG</h1>
+                <div class="enterBtn">
+                    <p>enter</p>
+                </div>
+            </section>
+        </div> <!-- visible and then hides -->
 
-            <p>Rules of the game:</p>
+        <div class="rules">
+            <p>THE RULES</p>
+            <ul>
+                <li>Try to prevent the ball from hitting the walls of the table. Anytime the ball hits the left or the right side of the table a point is scored.</li>
+                <li>Once a player's score goes up to <span>5</span> the player wins!</li>
+                <li>Enjoy!</li>
+            </ul>
+            <div class="ready">
+                <div class="yesNo">
+                    <div class="yes">
+                        <p>start game</p>
+                    </div>
+                </div>
+            </div>
+        </div><!-- hidden and then is visible -->
+
+        <!-- ORIGINAL CODE -->
+        <!--        <p>Rules of the game:</p>
             <ul>
                 <li>Try to prevent the ball from hitting the walls of the table. Anytime the ball hits the left or the right side of the table a point is scored.</li>
                 <li>Once a player's score goes up to <span>5</span> the player wins!</li>
@@ -30,27 +57,26 @@
                     <p>Machine</p>
                 </div>
                 <div class="computerBkg bottom"></div>
-            </section>
-	    </section>
-
-	    <section class="board">
-	        <canvas id="table" width='800' height='400' style="border: 10px solid #73A8AF; border-radius: 10px;"></canvas>
-	    </section>         
-	   
-	    <section class="controls">
+            </section> -->
+        <!-- end of original code -->       
+        <section class="board">
+             <canvas id="table" width='800' height='400' style="border: 10px solid #73A8AF; border-radius: 10px;"></canvas>
+        </section>         
+       
+        <section class="controls">
             <div class="pausePlay">
                 <i class="fa fa-play" aria-hidden="true"></i>
             </div>
             <div class="pauseBkg"></div>
-	    </section>
+        </section>
 
-	    <section class="winner">
+        <section class="winner">
             <div class="playGroup">
                 <div class="playagain top">
                     <p>Play again</p>
                 </div>
                 <div class="btnBackground bottom"></div>
             </div>
-	    </section>
+        </section>
     </body>
 </html>
