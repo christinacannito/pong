@@ -1,268 +1,388 @@
 html, body {
-    width: 100%;
-    height: 100%;
+                width: 100%;
+                height: 100%;
 }
  
 html {
-    display: block;
+                display: block;
 }
  
 body {
-    background-color: #DCBDB1;
-    color: #000;
-    font-family: 'Noto Sans', sans-serif;
-    margin: 0px;
-    display: flex;
-    overflow: hidden;
-    justify-content: center;
-    flex-direction: column;
+                background-image: url(images/background-pong.png);
+                background-position: center;
+                background-repeat: repeat;
+                background-color: #DCBDB1;
+                color: #000;
+                font-family: 'Noto Sans', sans-serif;
+                margin: 0px;
+                overflow: hidden;
+/*           display: flex;
+                overflow: hidden;
+                justify-content: center;
+                flex-direction: column;*/
 }
+ 
+nav {
+                width: 100%;
+                height: 100px;
+                display: flex;
+                background-color: #FFF;
+                position: fixed;
+                z-index: 2;
+                top: 0;
+                align-items: center;
+                justify-content: center;
+                list-style: none;
+}
+ 
+nav li {
+                font-family: 'Montserrat', sans-serif;
+}
+ 
+nav li:not(:last-child) {
+                margin-right: 20px;
+}
+ 
+nav li:hover, nav li.active {
+                cursor: pointer;
+                border-bottom: 3px solid #73A8AF;
+                padding-top: 3px;
+}
+ 
+.line {
+                width: 100%;
+                height: 2px;
+                background-color: #FFF;
+                position: fixed;
+                top: 110px;
+}
+ 
 h1 {
-    font-family: 'Julius Sans One', sans-serif;
-    font-size: 3em;
-    color: #73A8AF;
+                font-family: 'Julius Sans One', sans-serif;
+                font-size: 3em;
+                color: #73A8AF;
 }
  
 .playGroup {
-    width: 50%;
-    margin: 0 auto;
+                width: 50%;
+                margin: 0 auto;
 }
  
-.outline {
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
-    width: 60%;
-    height: 40%;
-    position: relative;
+.box1, .box2, .box3, .box4 {
+                border: 2px solid rgba(255, 255, 255, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-self: center;
+                width: 60%;
+                height: 40%;
+                position: relative;
+                top: 30%;
+                margin: 0 auto;
 }
  
-.startOfGame {
-    text-align: center;
-    width: 95%;
-    height: 90%;
-    margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.5);
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
+.box4 {
+                border: none;
+}
+ 
+.innerbox1, .innerbox2, .innerbox3 {
+                text-align: center;
+                width: 95%;
+                height: 90%;
+                margin: 0 auto;
+                background-color: rgba(255, 255, 255, 0.8);
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                justify-content: center;
+}
+ 
+.innerbox3 {
+ 
+}
+ 
+.innerbox4 {
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                justify-content: center;
 }
  
 .enterBtn {
-    color: #73A8AF;
-    border: 2px solid #73A8AF;
-    width: 15%;
-    margin: 0 auto;
-    border-radius: 0px;
-    -webkit-transition: background-color 0.5s ease-in, border-radius 0.5s ease-in;
-    -moz-transition: background-color 0.5s ease-in, border-radius 0.5s ease-in;
-    -ms-transition: background-color 0.5s ease-in, border-radius 0.5s ease-in;
-    -o-transition: background-color 0.5s ease-in, border-radius 0.5s ease-in;
-    transition: background-color 0.5s ease-in, border-radius 0.5s ease-in;
+                color: #73A8AF;
+                border: 2px solid #73A8AF;
+                width: 15%;
+                margin: 0 auto;
+                -webkit-transition: background-color 0.5s ease-in;
+                -moz-transition: background-color 0.5s ease-in;
+                -ms-transition: background-color 0.5s ease-in;
+                -o-transition: background-color 0.5s ease-in;
+                transition: background-color 0.5s ease-in;
 }
  
 .enterBtn:hover {
-    background-color: #73A8AF;
-    color: white;
-    cursor: pointer;
-    border-radius: 30px;
-    -webkit-transition: background-color 0.5s ease-out, border-radius 0.5s ease-out;
-    -moz-transition: background-color 0.5s ease-out, border-radius 0.5s ease-out;
-    -ms-transition: background-color 0.5s ease-out, border-radius 0.5s ease-out;
-    -o-transition: background-color 0.5s ease-out, border-radius 0.5s ease-out;
-    transition: background-color 0.5s ease-out, border-radius 0.5s ease-out;
+                background-color: #73A8AF;
+                color: white;
+                cursor: pointer;
+                -webkit-transition: background-color 0.5s ease-out;
+                -moz-transition: background-color 0.5s ease-out;
+                -ms-transition: background-color 0.5s ease-out;
+                -o-transition: background-color 0.5s ease-out;
+                transition: background-color 0.5s ease-out;
+}
+ 
+.box2, .box3 {
+                opacity: 0;
+                top: 100%;
+}
+ 
+.innerbox3 {
+                flex-direction: row;
 }
  
 .rules {
-    opacity: 0;
-    width: 60%;
-    height: 40%;
-    position: relative;
-    color: black;
-    display: flex;
-    align-items: center;
-    align-self: center;
-    background-color: rgba(255, 255, 255, 0.5);
-    flex-direction: column;
-    bottom: -1000px;
-    color: #73A8AF;
+                color: #73A8AF;
+}
+ 
+.rulesInfo {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+}
+ 
+.rulesInfo ul li {
+                text-align: left;
 }
  
 .ready {
-    width: 45%;
-    text-align: center;
+                width: 45%;
+                text-align: center;
 }
  
 .yesNo {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                justify-content: center;
 }
  
 .yes {
-    margin-right: 5%;
-}
- 
-.yes {
-    width: 40%;
-    border: 2px solid #73A8AF;
-    border-radius: 0px;
-    -webkit-transition: background-color 0.5s ease-in, border-radius 0.5s ease-in;
-    -moz-transition: background-color 0.5s ease-in, border-radius 0.5s ease-in;
-    -ms-transition: background-color 0.5s ease-in, border-radius 0.5s ease-in;
-    -o-transition: background-color 0.5s ease-in, border-radius 0.5s ease-in;
-    transition: background-color 0.5s ease-in, border-radius 0.5s ease-in;
+                margin-right: 5%;
+                width: 40%;
+                border: 2px solid #73A8AF;
+                -webkit-transition: background-color 0.5s ease-in;
+                -moz-transition: background-color 0.5s ease-in;
+                -ms-transition: background-color 0.5s ease-in;
+                -o-transition: background-color 0.5s ease-in;
+                transition: background-color 0.5s ease-in;
 }
  
 .yes:hover {
-    cursor: pointer;
-    border-radius: 30px;
-    background-color: #73A8AF;
-    color: #FFF;
-    -webkit-transition: background-color 0.5s ease-out, border-radius 0.5s ease-out;
-    -moz-transition: background-color 0.5s ease-out, border-radius 0.5s ease-out;
-    -ms-transition: background-color 0.5s ease-out, border-radius 0.5s ease-out;
-    -o-transition: background-color 0.5s ease-out, border-radius 0.5s ease-out;
-    transition: background-color 0.5s ease-out, border-radius 0.5s ease-out;
+                cursor: pointer;
+                background-color: #73A8AF;
+                color: #FFF;
+                -webkit-transition: background-color 0.5s ease-out;
+                -moz-transition: background-color 0.5s ease-out;
+                -ms-transition: background-color 0.5s ease-out;
+                -o-transition: background-color 0.5s ease-out;
+                transition: background-color 0.5s ease-out;
+}
+ 
+/*.vs {
+                /*visibility: hidden;*/
+/*           width: 0px;
+                height: 0px;
+                display: inline-block;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                opacity: 0;*/
+/*}*/
+ 
+.person, .computer {
+                width: 50%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+}
+ 
+.personSvg:hover, .computerSvg:hover {
+                cursor: pointer;
+                -webkit-animation: expand 2s 1; /* Chrome, Safari, Opera */
+                animation: expand 2s 1;
+                transform: scale(1, 1);
+}
+ 
+@keyframes expand {
+                0% {
+                                transform: scale(1, 1);
+                }
+                50% {
+                                transform: scale(1.25, 1.25);
+                }
+                100% {
+                                transform: scale(1, 1);
+                }
 }
  
 .btnSection {
-   text-align: center;
+                text-align: center;
 }
  
-.winner, .board, .controls{
-	visibility: hidden;
-	width: 0px;
-	height: 0px;
+.cursor {
+                -webkit-animation: pulse 2s infinite; /* Chrome, Safari, Opera */
+    animation: pulse 2s infinite;
+}
+ 
+@keyframes pulse {
+                0% {
+                                opacity: 1;
+                }
+                25% {
+                                opacity: .8;
+                }
+                50% {
+                                opacity: .2;
+                }
+                100% {
+                                opacity: 1;
+                }
+}
+ 
+.winner {
+                visibility: hidden;
+                width: 0px;
+                height: 0px;
+                opacity: 0;
+                position: relative;
+                margin: 0 auto;
+}
+ 
+.controls {
+                opacity: 0;
+                position: relative;
 }
  
 .board {
-    text-align: center;
+                text-align: center;
 }
  
 .top {
-    width: 100px;
-    height: 50px;
-    background-color: #73A8AF;
-    border-radius: 10px;
-    display: inline-block;
-    color: #FFF;
-    position: relative;
-    z-index: 2;
-    font-family: Arial, Helvetica, sans-serif;
-}
- 
-.person, .computer {
-    top: -5px;
-    left: -2px;
-}
-.person:hover, .computer:hover {
-    top: 1px;
-    left: 4px;
+                width: 100px;
+                height: 50px;
+                background-color: #73A8AF;
+                border-radius: 10px;
+                display: inline-block;
+                color: #FFF;
+                position: relative;
+                z-index: 2;
+                font-family: Arial, Helvetica, sans-serif;
 }
  
 .bottom {
-    background-color: #495453;
-    width: 100px;
-    height: 50px;
-    position: relative;
-    z-index: 1;
-    display: inline-block;
-    border-radius: 10px;
-    left: -100px;
-    top: 21px;
+                background-color: #495453;
+                width: 100px;
+                height: 50px;
+                position: relative;
+                z-index: 1;
+                display: inline-block;
+                border-radius: 10px;
+                left: -100px;
+                top: 21px;
 }
  
 .top:hover {
-    cursor: pointer;
+                cursor: pointer;
 }
  
 .playerNames {
-    visibility: hidden;
+                visibility: hidden;
 }
  
 .leftPlayer, .rightPlayer {
-    display: inline-block;
-    margin-right: 40px;
+                display: inline-block;
+                margin-right: 40px;
     visibility: hidden;
 }
  
 .leftPlayer {
-	float: left;
+                float: left;
 }
  
 .submit, .submitbtm {
-    width: 70px;
-    text-align: center;
-    position: relative;
-    height: 44px;
+                width: 70px;
+                text-align: center;
+                position: relative;
+                height: 44px;
  
 }
  
 .submit:hover {
-    top: 5px;
-    left: 4px;
+                top: 5px;
+                left: 4px;
 }
  
 .submitbtm {
-    left: -70px;
-    top: 19px;
+                left: -70px;
+                top: 19px;
 }
  
 .pausePlay {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: #73A8AF;
-    text-align: center;
-    position: relative;
-    z-index: 2;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                background-color: #73A8AF;
+                text-align: center;
+                position: relative;
+                z-index: 2;
+                margin: 0 auto;
 }
  
 .pauseBkg {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: #495453;
-    z-index: 1;
-    position: relative;
-    top: -75px;
-    left: 4px;
+                margin: 0 auto;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                background-color: #495453;
+                z-index: 1;
+                position: relative;
+                top: -75px;
+                left: 4px;
 }
  
 .pausePlay:hover {
-    cursor: pointer;
-    top: 5px;
-    left: 4px;
+                cursor: pointer;
+                top: 5px;
+                left: 4px;
 }
  
 .pausePlay .fa-play, .pausePlay .fa-pause {
-    color: #FFF;
-    font-size: 3em;
-    margin-top: 15px;
+                color: #FFF;
+                font-size: 3em;
+                margin-top: 15px;
 }
  
-.person p, .computer p {
-    text-align: center;
-}
+/*.person p, .computer p {
+                text-align: center;
+}*/
  
 .playagain {
-    display: block;
-    text-align: center;
-    padding-top: 1px;
+                display: block;
+                text-align: center;
+                padding-top: 1px;
 }
  
 .btnBackground {
-    top: -45px;
-    left: 5px;
+                top: -45px;
+                left: 5px;
 }
  
 .playagain:hover {
-    cursor: pointer;
-    top: 5px;
-    left: 5px;
+                cursor: pointer;
+                top: 5px;
+                left: 5px;
 }

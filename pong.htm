@@ -2,6 +2,29 @@
 <html>
 <head>
     <title>Pong</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="pong game">
+    <meta name="keywords" content="pong game, christina cannito">
+    <meta name="author" content="Christina Cannito">
+    <!-- favicon icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="images/favicons/apple-icon-57x57.png">
+                <link rel="apple-touch-icon" sizes="60x60" href="images/favicons/apple-icon-60x60.png">
+                <link rel="apple-touch-icon" sizes="72x72" href="images/favicons/apple-icon-72x72.png">
+                <link rel="apple-touch-icon" sizes="76x76" href="images/favicons/apple-icon-76x76.png">
+                <link rel="apple-touch-icon" sizes="114x114" href="images/favicons/apple-icon-114x114.png">
+                <link rel="apple-touch-icon" sizes="120x120" href="images/favicons/apple-icon-120x120.png">
+                <link rel="apple-touch-icon" sizes="144x144" href="images/favicons/apple-icon-144x144.png">
+                <link rel="apple-touch-icon" sizes="152x152" href="images/favicons/apple-icon-152x152.png">
+                <link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-icon-180x180.png">
+                <link rel="icon" type="image/png" sizes="192x192"  href="images/favicons/android-icon-192x192.png">
+                <link rel="icon" type="image/png" sizes="32x32" href="images/favicons/favicon-32x32.png">
+                <link rel="icon" type="image/png" sizes="96x96" href="images/favicons/favicon-96x96.png">
+                <link rel="icon" type="image/png" sizes="16x16" href="images/favicons/favicon-16x16.png">
+                <link rel="manifest" href="/manifest.json">
+                <meta name="msapplication-TileColor" content="#ffffff">
+                <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+                <meta name="theme-color" content="#ffffff">
+    <!-- end of icons -->
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://use.fontawesome.com/8b8cb59dd2.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
@@ -10,64 +33,85 @@
     <link href='https://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <script   src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/mainanimationframe.js"></script>
 </head>
     <body>
-        <div class="outline">
-            <section class="startOfGame">
+                <nav>
+                                <li class="homeNav one active">Home</li>
+                                <li class="rulesNav two">Rules</li>
+                                <li class="playersNav three">Players</li>
+                                <li class="boardNav four">Board</li>
+                </nav>
+                <div class="line"></div>
+ 
+        <section class="outline box1">
+            <article class="startOfGame innerbox1">
                 <h1>PONG</h1>
                 <div class="enterBtn">
                     <p>enter</p>
                 </div>
-            </section>
-        </div> <!-- visible and then hides -->
-
-        <div class="rules">
-        	<div class="rulesInfo">
-	            <p>THE RULES</p>
-	            <ul>
-	                <li>Try to prevent the ball from hitting the walls of the table. Anytime the ball hits the left or the right side of the table a point is scored.</li>
-	                <li>Once a player's score goes up to <span>5</span> the player wins!</li>
-	                <li>Enjoy!</li>
-	            </ul>
-	            <div class="ready">
-	                <div class="yesNo">
-	                    <div class="yes">
-	                        <p>start game</p>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="vs">
-	        	<div class="person"></div>
-	        	<div class="computer"></div>
-	        </div>    
-        </div><!-- hidden and then is visible -->
-
-        <!-- ORIGINAL CODE -->
-        <!--        <p>Rules of the game:</p>
-            <ul>
-                <li>Try to prevent the ball from hitting the walls of the table. Anytime the ball hits the left or the right side of the table a point is scored.</li>
-                <li>Once a player's score goes up to <span>5</span> the player wins!</li>
-                <li>Enjoy!</li>
-            </ul>
-
-            <p>Would you like to play against another person or against the computer?</p>
-            <section class="btnSection">
-                <div class="person top">
-                    <p>Human</p>
-                </div>
-                <div class="personBkg bottom"></div>
-                <div class="computer top">
-                    <p>Machine</p>
-                </div>
-                <div class="computerBkg bottom"></div>
-            </section> -->
-        <!-- end of original code -->       
-        <section class="board">
-             <canvas id="table" width='800' height='400' style="border: 10px solid #73A8AF; border-radius: 10px;"></canvas>
-        </section>         
+            </article>
+        </section> <!-- visible and then hides --> <!-- HOME - box 1 -->
+ 
+        <section class="rulesOutline box2">
+                        <article class="rules innerbox2">
+                                <div class="rulesInfo">
+                                            <p>RULES</p>
+                                            <ul>
+                                                <li>Try to prevent the ball from hitting the walls of the table. Anytime the ball hits the left or the right side of the table a point is scored.</li>
+                                                <li>Once a player's score goes up to <span>5</span> the player wins!</li>
+                                                <li>Enjoy!</li>
+                                            </ul>
+                                            <div class="ready">
+                                                <div class="yesNo">
+                                                    <div class="yes">
+                                                        <p>start game</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                        </article><!-- hidden and then is visible -->
+                    </section><!-- end of rulesOutline --> <!-- full container -->  
+    
+                                <section class="vs box3">
+                                                <article class="innerbox3">
+                                <div class="person">
+                                                <svg class="personSvg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="140px" height="190px" viewBox="0 0 140 190" enable-background="new 0 0 140 190" xml:space="preserve">
+                                                                                                <path fill="#73A8AE" d="M87.058,98.264c14.491-5.823,24.728-19.998,24.728-36.572c0-21.764-17.644-39.408-39.409-39.408
+                                                                                                c-21.765,0-39.407,17.644-39.407,39.408c0,16.54,10.192,30.69,24.635,36.536c-32.59,8.259-56.638,42.375-56.638,66.184
+                                                                                                c0,1.145,0.061,2.243,0.169,3.305h138.143c0.165-1.368,0.254-2.799,0.254-4.303C139.533,139.679,118.699,106.463,87.058,98.264z"/>
+                                                                                </svg>
+                                                <p>person vs person</p>
+                                </div>
+                                <div class="computer">
+                                                <svg class="computerSvg" version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="140px" height="190px" viewBox="0 0 140 190" enable-background="new 0 0 140 190" xml:space="preserve">
+                                                                                                <path fill="#375151" d="M137.333,179.322c0,4.716-3.823,8.539-8.539,8.539H10.673c-4.716,0-8.539-3.823-8.539-8.539v-13.521
+                                                                                                                c0-4.715,3.823-8.538,8.539-8.538h118.121c4.f716,0,8.539,3.823,8.539,8.538V179.322z"/>
+                                                                                                <g>
+                                                                                                                <path fill="#73A8AE" d="M130.774,2.141H8.694C3.893,2.141,0,6.006,0,10.774v144.97c0,4.77,3.893,8.634,8.694,8.634h122.081
+                                                                                                                                c4.8,0,8.693-3.864,8.693-8.634V10.774C139.468,6.006,135.574,2.141,130.774,2.141z M124.88,99.982
+                                                                                                                                c0,4.715-3.823,8.539-8.538,8.539H22.059c-4.716,0-8.539-3.824-8.539-8.539V27.758c0-4.716,3.823-8.539,8.539-8.539h94.283
+                                                                                                                                c4.715,0,8.538,3.822,8.538,8.539V99.982z"/>
+                                                                                                                <path fill="#619093" d="M116.342,19.219H22.059c-4.716,0-8.539,3.822-8.539,8.539v72.224c0,4.715,3.823,8.539,8.539,8.539h94.283
+                                                                                                                                c4.715,0,8.538-3.824,8.538-8.539V27.758C124.88,23.042,121.057,19.219,116.342,19.219z M120.611,93.02
+                                                                                                                                c0,4.827-3.891,8.741-8.688,8.741H25.766c-4.799,0-8.688-3.914-8.688-8.741V33.652c0-4.827,3.89-8.741,8.688-8.741h86.157
+                                                                                                                                c4.798,0,8.688,3.914,8.688,8.741V93.02z"/>
+                                                                                                </g>
+                                                                                                <rect x="0.356" y="133.782" fill="#375151" width="138.755" height="3.558"/>
+                                                                                                <rect x="68.311" y="133.782" fill="#5A8184" width="53.724" height="3.558"/>
+                                                                                                <rect class="cursor" x="26.5" y="38.5" fill="#375151" width="4" height="12"/>
+                                                                                </svg>
+                                                <p>pervson vs machine</p>
+                                </div>
+        </section> 
+ 
+        <section class="board box4">
+            <article class="innerbox4">            
+                <canvas id="table" width='800' height='400' style="border: 10px solid #73A8AF; border-radius: 10px;"></canvas>
+            </article>
+        </section>        
        
         <section class="controls">
             <div class="pausePlay">
@@ -75,12 +119,12 @@
             </div>
             <div class="pauseBkg"></div>
         </section>
-
+ 
         <section class="winner">
             <div class="playGroup">
                 <div class="playagain top">
                     <p>Play again</p>
-                </div>
+               </div>
                 <div class="btnBackground bottom"></div>
             </div>
         </section>

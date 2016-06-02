@@ -1,28 +1,160 @@
 $(document).ready(function(){
-    // enter button
+    // nav active states
+    $('nav li').on('click', function(){
+        console.log('this for nav item: ', $(this))
+        if ($(this).hasClass('homeNav')) {
+            // clicked on homeNave
+            // remove what is there and show homeNav
+            // show box1 and hide all other boxes
+ 
+            // what box is currently there?
+            $('.box2').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000)
+            $('.box3').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000)
+            $('.box4').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000, function(){
+                $('.box1').animate({
+                    top: '30%',
+                    opacity: 1
+                }, 2000, function(){
+ 
+                })
+            })
+        } else if ($(this).hasClass('rulesNav')) {
+            $('.box1').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000)
+            $('.box3').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000)
+            $('.box4').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000, function(){
+                $('.box2').animate({
+                    top: '-10%',
+                    opacity: 1
+                }, 2000, function(){
+ 
+                })
+            })
+        } else if ($(this).hasClass('playersNav')) {
+            $('.box1').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000)
+            $('.box2').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000)
+            $('.box4').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000, function(){
+                $('.box3').animate({
+                    top: '-50%',
+                    opacity: 1
+                }, 2000, function(){
+ 
+                })
+            })
+        } else if ($(this).hasClass('boardNav')) {
+            $('.box1').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000)
+            $('.box2').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000)
+            $('.box3').animate({
+                top: '30%',
+                opacity: 0
+            }, 2000, function(){
+                leftPaddle.move('autoTwo', firstBall);
+                // leftPaddle.watch(firstBall)
+                animateAi();
+                $('.box4').animate({
+                    top: '-85%',
+                    opacity: 1
+                }, 2000, function(){
+ 
+                })
+            })
+        }
+        $('nav li').removeClass('active');
+        $(this).addClass('active');
+    });
+ 
+    // when you click on a nav option whatever div is currently being displayed needs to go up and the div that was clicked on needs to appear
+ 
+ 
+    // box1
     $('.enterBtn').on('click', function(){
-        console.log('enter button clicked')
-        $('.outline').animate({
+        console.log('enter button clicked');
+        $('nav li').removeClass('active');
+        $('.rulesNav').addClass('active');
+        $('.outline').animate({ // leaving
             top: -($('.outline').height() + $('.outline').offset().top + 10),
             opacity: 0
         }, 2000, function(){
             console.log('animation complete')
             // make another div appear
-            $('.rules').animate({
+            $('.box2').animate({ // coming in
                 opacity: 1,
-                top: '-200px'
+                top: '-4%'
             }, 2000, function(){
-                console.log('rules should be showing')
+                console.log('rules should be showing');
             })
         });
     })
-
-    $('.yesNo').on('click', function(){
-        $('.rulesInfo').animate({
+ 
+    // box2
+    $('.yes').on('click', function(){
+        $('nav li').removeClass('active');
+        $('.playersNav').addClass('active');
+        $('.box2').animate({ //leaving
+            top: -($('.box2').height() + $('.box2').offset().top + 10),
             opacity: 0
         }, 2000, function(){
-            
-        })
+            console.log('animation complete')
+            // make another div appear
+            $('.box3').animate({
+                opacity: 1,
+                top: '-50%'
+            }, 2000, function(){
+                console.log('rules should be showing');
+            })
+        });
+    })
+ 
+    // box3
+    $('.personSvg, .computerSvg').on('click', function(){
+        $('nav li').removeClass('active');
+        $('.boardNav').addClass('active');
+        $('.box3').animate({ // leaving
+            top: -($('.box3').height() + $('.box3').offset().top + 10),
+            opacity: 0
+        }, 2000, function(){
+            console.log('animation complete')
+            // make another div appear
+            $('.box4').animate({ // coming in
+                opacity: 1,
+                top: '-90%'
+            }, 2000, function(){
+                $('.controls').css({'visibility': 'visible', 'opacity': '1'})
+                console.log('rules should be showing');
+            })
+        });
     })
  
     var table = $('#table'); // gets the canvas element
@@ -119,7 +251,7 @@ $(document).ready(function(){
             }
         }
     }
-     // function Ball (x, y, radius, leftPaddle, rightPaddle) (best)
+    // function Ball (x, y, radius, leftPaddle, rightPaddle) (best)
     function Ball (x, y, radius) {
         this.x = Math.floor(x);
         this.y = Math.floor(y);
@@ -216,7 +348,7 @@ $(document).ready(function(){
                     if (leftPaddleScore > rightPaddleScore) {
                         tableContext.fillText("Left player won!", 400, 200 );
                     } else if (leftPaddleScore < rightPaddleScore) {
-                       tableContext.fillText("Right player won!", 400, 200 );
+                        tableContext.fillText("Right player won!", 400, 200 );
                     } else {
                         tableContext.fillText("Tie!", 400, 200 );
                     }
@@ -361,18 +493,45 @@ $(document).ready(function(){
         firstBall.render()
         drawScore();
     }
-    $('.person').on('click', function(){
+ 
+    $('.personSvg').on('click', function(){
         // show users to enter in their names
-        $('.controls').css('visibility', 'visible')
-        $('.startOfGame').css({'visibility': 'hidden', 'width': '0', 'height': '0'});
-        $('.board').css('visibility', 'visible')
+        // $('.rulesOutline').animate({
+        //     top: -($('.rulesOutline').height() + $('.rulesOutline').offset().top + 10),
+        //     opacity: 0
+        // }, 2000, function(){
+        //     console.log('now the board should be displayed')
+        // });
+        // $('.controls').css({'visibility': 'visible', 'opacity': '1'})
+        // // $('.startOfGame').css({'visibility': 'hidden', 'width': '0', 'height': '0'});
+        // $('.board').css({'visibility': 'visible', 'width': '800', 'height': '400'})
+        //    $('.board').animate({
+        //     opacity: 1,
+        //     top: -200
+        // }, 2000, function(){
+ 
+        // })
         animatePerson();
     })
-    $('.computer').on('click', function(){
+    $('.computerSvg').on('click', function(){
         // show users to enter in their names
-        $('.controls').css('visibility', 'visible')
-        $('.startOfGame').css({'visibility': 'hidden', 'width': '0', 'height': '0'});
-        $('.board').css('visibility', 'visible')
+        // $('.startOfGame').css({'visibility': 'hidden', 'width': '0', 'height': '0'});
+        // $('.board').css('visibility', 'visible')
+        // $('.rulesOutline').animate({
+        //     top: -($('.rulesOutline').height() + $('.rulesOutline').offset().top + 10),
+        //     opacity: 0
+        // }, 2000, function(){
+        //     console.log('now the board should be displayed')
+        // });
+        // $('.controls').css({'visibility': 'visible', 'opacity': '1'})
+        // // $('.startOfGame').css({'visibility': 'hidden', 'width': '0', 'height': '0'});
+        // $('.board').css({'visibility': 'visible', 'width': '800', 'height': '400'})
+        //    $('.board').animate({
+        //     opacity: 1,
+        //     top: -200
+        // }, 2000, function(){
+ 
+        // })
         leftPaddle.move('autoTwo', firstBall);
         // leftPaddle.watch(firstBall)
         animateAi();
